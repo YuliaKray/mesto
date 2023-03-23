@@ -16,3 +16,7 @@
 .form__text:last-of-type{
   margin-bottom: 0;
 }
+
+.form__text:focus{
+  outline-color: blue;
+}

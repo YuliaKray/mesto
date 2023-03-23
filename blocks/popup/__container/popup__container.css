@@ -1,5 +1,4 @@
-.popap__container{
-  margin-top: 195px;
+.popup__container{
   padding: 34px 36px 37px;
   max-width: 430px;
   min-width: 282px;
@@ -10,8 +9,7 @@
 }
 
 @media screen and (max-width: 685px) {
-  .popap__container{
-    margin-top: 123px;
+  .popup__container{
     padding: 25px 22px;
   }
 }

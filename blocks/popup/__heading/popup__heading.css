@@ -1,4 +1,4 @@
-.popap__heading{
+.popup__heading{
   margin: 0;
   padding-bottom: 48px;
   font-style: normal;
@@ -8,7 +8,7 @@
 }
 
 @media screen and (max-width: 685px) {
-  .popap__heading{
+  .popup__heading{
     padding-bottom: 75px;
     font-size: 18px;
     line-height: 1.22;

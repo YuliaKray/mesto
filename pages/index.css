@@ -36,17 +36,17 @@
 
 @import url(../blocks/footer/__copyright/footer__copyright.css);
 
-@import url(../blocks/popap/popap.css);
+@import url(../blocks/popup/popup.css);
 
-@import url(../blocks/popap/__container/popap__container.css);
+@import url(../blocks/popup/__container/popup__container.css);
 
-@import url(../blocks/popap/__heading/popap__heading.css);
+@import url(../blocks/popup/__heading/popup__heading.css);
 
-@import url(../blocks/popap/__submit-button/popap__submit-button.css);
+@import url(../blocks/popup/__submit-button/popup__submit-button.css);
 
-@import url(../blocks/popap/__close/popap__close.css);
+@import url(../blocks/popup/__close/popup__close.css);
 
-@import url(../blocks/popap/_open/popap_open.css);
+@import url(../blocks/popup/_open/popup_open.css);
 
 @import url(../blocks/form/form.css);
 

@@ -1,4 +1,4 @@
-.popap__submit-button{
+.popup__submit-button{
   padding: 0;
   background-color: black;
   color: #fff;
@@ -12,14 +12,14 @@
   line-height: 1.22;
 }
 
-.popap__submit-button:hover{
+.popup__submit-button:hover{
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 2s ease;
 }
 
 @media screen and (max-width: 685px) {
-  .popap__submit-button{
+  .popup__submit-button{
     height: 46px;
     font-size: 14px;
     line-height: 1.21;
