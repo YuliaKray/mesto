@@ -1,0 +1,21 @@
+.popap{
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  align-items: start;
+  justify-content: center;
+  z-index: 3;
+  background-color: rgb(0, 0, 0, 0.5);
+  display: none;
+}
+
+@media screen and (max-width: 685px) {
+  .popap{
+    padding-left: 19px;
+    padding-right: 19px;
+  }
+  
+}

@@ -1,0 +1,21 @@
+.popap__close{
+  position: absolute;
+  top: -42px;
+  right: -44px;
+  width: 32px;
+  object-fit: contain;
+}
+
+.popap__close:hover{
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 2s ease;
+}
+
+@media screen and (max-width: 685px) {
+  .popap__close{
+    top: -41px;
+    right: 0;
+    width: 20px;
+  }
+}

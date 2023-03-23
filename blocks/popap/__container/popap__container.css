@@ -1,0 +1,17 @@
+.popap__container{
+  margin-top: 195px;
+  padding: 34px 36px 37px;
+  max-width: 430px;
+  min-width: 282px;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 685px) {
+  .popap__container{
+    margin-top: 123px;
+    padding: 25px 22px;
+  }
+}
