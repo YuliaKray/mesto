@@ -1,4 +1,4 @@
-.form__text{
+.popup__form-text{
   margin-bottom: 30px;
   border: 0;
   width: 100%;
@@ -13,10 +13,10 @@
   line-height: 1.21;
 }
 
-.form__text:last-of-type{
+.popup__form-text:last-of-type{
   margin-bottom: 0;
 }
 
-.form__text:focus{
+.popup__form-text:focus{
   outline-color: blue;
 }
