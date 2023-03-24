@@ -8,8 +8,9 @@ const formElement = editButtonPopup.querySelector('.popup__form');
 const nameInput = document.querySelector('.profile__name');
 const jodInput = document.querySelector('.profile__caption');
 
-
-console.log(formElement);
+function closePopup(){
+  editButtonPopup.classList.remove('popup_open');
+}
 
 editButton.addEventListener('click', function(){
   editButtonPopup.classList.add('popup_open');
@@ -17,16 +18,14 @@ editButton.addEventListener('click', function(){
   editPopupDescription.value = jodInput.textContent;
 });
 
-editPopupClose.addEventListener('click', function(){
-  editButtonPopup.classList.remove('popup_open');
-});
+editPopupClose.addEventListener('click', closePopup);
 
 function handleFormSubmit(event){
   event.preventDefault();
 
   nameInput.textContent = editPopupName.value;
   jodInput.textContent = editPopupDescription.value;
-  editButtonPopup.classList.remove('popup_open');
+  closePopup();
 }
 
 editPopupSubmit.addEventListener('click', handleFormSubmit);
