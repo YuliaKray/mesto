@@ -15,41 +15,41 @@
       <img class="profile__image" alt="Фото профиля" src="./images/avatar.jpg">
       <div class="profile__info">
         <h1 class="profile__name">Жак-Ив Кусто</h1>
-        <img class="profile__edit-button" alt="кнопка редактирования" src="./images/Edit-button.svg">
+        <button type="button" class="profile__edit-button" aria-label="кнопка редактирования"></button>
         <p class="profile__caption">Исследователь океана</p>
       </div>
-      <img class="profile__add-button" alt="кнопка добавления" src="./images/add-button.png">
+      <button type="button" class="profile__add-button" aria-label="кнопка добавления"></button>
     </section>
     <section class="cards" aria-label="Фотографии">
       <article class="card">
         <img class="card__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
         <h2 class="card__text">Карачаевск</h2>
-        <div class="card__like"></div>
+        <button class="card__like" type="button" aria-label="Лайк"></button>
       </article>
       <article class="card">
         <img class="card__image" alt="Гора Эльбрус" src="./images/Elbrus.png">
         <h2 class="card__text">Гора Эльбрус</h2>
-        <div class="card__like"></div>
+        <button class="card__like" type="button" aria-label="Лайк"></button>
       </article>
       <article class="card">
         <img class="card__image" alt="Домбай" src="./images/Dombay.png">
         <h2 class="card__text">Домбай</h2>
-        <div class="card__like"></div>
+        <button class="card__like" type="button" aria-label="Лайк"></button>
       </article>
       <article class="card">
         <img class="card__image" alt="Гора Эльбрус" src="./images/Elbrus.png">
         <h2 class="card__text">Гора Эльбрус</h2>
-        <div class="card__like"></div>
+        <button class="card__like" type="button" aria-label="Лайк"></button>
       </article>
       <article class="card">
         <img class="card__image" alt="Домбай" src="./images/Dombay.png">
         <h2 class="card__text">Домбай</h2>
-        <div class="card__like"></div>
+        <button class="card__like" type="button" aria-label="Лайк"></button>
       </article>
       <article class="card">
         <img class="card__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
         <h2 class="card__text">Карачаево-Черкесия</h2>
-        <div class="card__like"></div>
+        <button class="card__like" type="button" aria-label="Лайк"></button>
       </article>
     </section>
   </main>
@@ -58,15 +58,15 @@
   </footer>
   <section class="popup popup_type_edit" aria-label="Редактировать">
     <div class="popup__container">
-      <img class="popup__close" alt="Х" src="./images/Close-Icon.svg">
+      <button type="button" class="popup__close" aria-label="Х"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form">
-        <input class="popup__form-text popup__form-text_type_name" type="text" placeholder="Имя">
-        <input class="popup__form-text popup__form-text_type_description" type="text" placeholder="О себе">
+      <form class="popup__form" name="edit-form">
+        <input class="popup__form-text popup__form-text_type_name" type="text" placeholder="Имя" name="name">
+        <input class="popup__form-text popup__form-text_type_description" type="text" placeholder="О себе" name="jod">
         <button type="submit" class="popup__submit-button">Сохранить</button>
       </form>
     </div>
   </section>
-  <script src="./index.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>

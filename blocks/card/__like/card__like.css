@@ -2,11 +2,12 @@
   background-image: url(../../../images/like_disabled.svg);
   background-size: contain;
   background-repeat: no-repeat;
-  position: absolute;
-  bottom: 30px;
-  right: 20px;
-  min-width: 22px;
-  min-height: 19px;
+  padding: 0 20px 0 0;
+  margin-bottom: 30px;
+  width: 22px;
+  height: 19px;
+  border: none;
+  background-color: transparent;
 }
 
 .card__like:hover{

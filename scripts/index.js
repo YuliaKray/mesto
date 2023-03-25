@@ -3,7 +3,6 @@ const editButtonPopup = document.querySelector('.popup_type_edit');
 const editPopupClose = editButtonPopup.querySelector('.popup__close');
 const editPopupName = editButtonPopup.querySelector('.popup__form-text_type_name');
 const editPopupDescription = editButtonPopup.querySelector('.popup__form-text_type_description');
-const editPopupSubmit = editButtonPopup.querySelector('.popup__submit-button');
 const formElement = editButtonPopup.querySelector('.popup__form');
 const nameInput = document.querySelector('.profile__name');
 const jodInput = document.querySelector('.profile__caption');
@@ -11,14 +10,6 @@ const jodInput = document.querySelector('.profile__caption');
 function closePopup(){
   editButtonPopup.classList.remove('popup_open');
 }
-
-editButton.addEventListener('click', function(){
-  editButtonPopup.classList.add('popup_open');
-  editPopupName.value = nameInput.textContent;
-  editPopupDescription.value = jodInput.textContent;
-});
-
-editPopupClose.addEventListener('click', closePopup);
 
 function handleFormSubmit(event){
   event.preventDefault();
@@ -28,4 +19,15 @@ function handleFormSubmit(event){
   closePopup();
 }
 
-editPopupSubmit.addEventListener('click', handleFormSubmit);
+function openPopup(){
+  editButtonPopup.classList.add('popup_open');
+  editPopupName.value = nameInput.textContent;
+  editPopupDescription.value = jodInput.textContent;
+}
+
+
+editButton.addEventListener('click', openPopup);
+
+editPopupClose.addEventListener('click', closePopup);
+
+formElement.addEventListener('submit', handleFormSubmit);

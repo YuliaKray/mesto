@@ -6,3 +6,10 @@
   font-size: 18px;
   line-height: 1.22;
 }
+
+@media screen and (max-width: 685px) {
+  .footer__copyright{
+    font-size: 14px;
+    line-height: 1.21;
+  } 
+}
