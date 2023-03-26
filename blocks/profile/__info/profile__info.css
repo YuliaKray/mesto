@@ -10,8 +10,22 @@
 
 @media screen and (max-width: 950px) {
   .profile__info{
+    width: 100%;
     padding: 26px 0 36px;
     flex-basis: auto;
     gap: 14px 10px;
-  }  
+    grid-template-columns: 60% auto;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .profile__info{
+    grid-template-columns: 70% auto;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .profile__info{
+    grid-template-columns: 80% auto;
+  }
 }
