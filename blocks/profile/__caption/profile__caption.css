@@ -5,11 +5,9 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 1.22;
-  grid-column: span 2;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  flex-shrink: 0;
 }
 
 @media screen and (max-width: 950px) {
