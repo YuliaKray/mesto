@@ -11,6 +11,7 @@
   height: 22px;
   align-self: center;
   justify-self: flex-end;
+  flex-shrink: 0;
 }
 
 .profile__add-button:hover{
