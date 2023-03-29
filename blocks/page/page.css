@@ -1,7 +1,17 @@
 .page{
   margin: 0 auto;
-  max-width: 1280px;
+  max-width: 880px;
   min-width: 320px;
   background-color: #000000;
   font-family: 'Inter', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+/*
+@media screen and (max-width: 685px) {
+  .page{
+    padding: 0;
+  }
+}
+*/
