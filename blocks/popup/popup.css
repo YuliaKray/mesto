@@ -8,11 +8,10 @@
   justify-content: center;
   z-index: 3;
   background-color: rgb(0, 0, 0, 0.5);
-  /*display: none;*/
   display: flex;
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s, opacity 0.5s linear;
+  transition: visibility 0.5s, opacity 0.5s linear;
 }
 
 @media screen and (max-width: 685px) {
@@ -20,5 +19,4 @@
     padding-left: 19px;
     padding-right: 19px;
   }
-  
 }

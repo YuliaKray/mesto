@@ -40,12 +40,18 @@ const addButton = document.querySelector('.profile__add-button');
 const addPopup = document.querySelector('.popup_type_add');
 const addPopupClose = addPopup.querySelector('.popup__close');
 const addFormElement = addPopup.querySelector('.popup__form')
-const addPopupPlace = addPopup.querySelector('.popup__form-text_type_place');
-const addPopupImage = addPopup.querySelector('.popup__form-text_type_image-link');
-//const placeInput = document.querySelector('.')
+const placeInput = addPopup.querySelector('.popup__form-text_type_place');
+const imageInput = addPopup.querySelector('.popup__form-text_type_image-link');
 const cardTemplate = document.querySelector('.card-template');
 const cardsGrid = document.querySelector('.cards');
 
+//Переменные для попапа просмотра картинки
+const imagePopup = document.querySelector('.popup_type_image');
+const imagePopupClose = imagePopup.querySelector('.popup__close');
+const bigImage = imagePopup.querySelector('.popup__image');
+const captionImage = imagePopup.querySelector('.popup__caption');
+
+console.log(bigImage)
 
 //Функции открытия попапов
 function openPopup(popup) {
@@ -78,9 +84,11 @@ const createCardElement = (cardData) => {
   const cardElement = cardTemplate.content.querySelector('.card').cloneNode(true);
   const cardName = cardElement.querySelector('.card__text');
   const cardImage = cardElement.querySelector('.card__image');
-  cardName.innerHTML = cardData.name;
+  cardName.textContent = cardData.name;
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
+
+  cardImage.addEventListener('click', () => openImagePopup(cardData));
 
   const deleteButton = cardElement.querySelector('.card__delete');
   const likeButton = cardElement.querySelector('.card__like');
@@ -98,19 +106,31 @@ const createCardElement = (cardData) => {
   return cardElement;
 }
 
+//Функция для открытия попапов картинок
+function openImagePopup(cardData) {
+  captionImage.textContent = cardData.name//cardName.textContent;
+  bigImage.alt = cardData.name;//cardImage.alt;
+  bigImage.srс = cardData.link;//cardImage.src;
+
+  console.log(bigImage)
+  
+  imagePopup.classList.add('popup_open');
+}
+
+//Функция добавляет новую карточку, которую вводят в input 
 function handleAddFormSubmit(event){
   event.preventDefault();
 
-  const placeInput = addPopupPlace.value;
-  const imageInput = addPopupImage.value;
-  const cardsData = {
+  const name = placeInput.value;
+  const link = imageInput.value;
+  const cardData = {
     name,
-    link  //ЗДЕСЬ ЧТО-ТО НЕ ТАК!!!
+    link,
   };
-
-
+  
+  addCardElement(createCardElement(cardData));
+  
   closePopup(addPopup);
-  console.log(addPopupPlace);
 }
 
 //Функция добавляет массив карточек в изначальный грид-контейнер CARD
@@ -118,12 +138,11 @@ const addCardElement = (cardElement) =>{
   cardsGrid.prepend(cardElement)
 }
 
-//forEach делает дествие, которое записано в функции, с каждым элементом массива
+//forEach делает действие, которое записано в функции, с каждым элементом массива
 //initialCards - название изначального массива 
 initialCards.forEach((card) => {
   addCardElement(createCardElement(card));
 });
-
 
 
 //Слушатели открытия попапов
@@ -137,6 +156,16 @@ addButton.addEventListener('click', () => {
   openPopup(addPopup)
 });
 
+//imageButton.addEventListener('click', () => {
+//  openPopup(imagePopup);
+//  const cardElement = cardTemplate.content.querySelector('.card').cloneNode(true);
+//  const cardName = cardElement.querySelector('.card__text');
+//  const cardImage = cardElement.querySelector('.card__image');
+//  cardName.textContent = cardData.name;
+//  cardImage.src = cardData.link;
+//  cardImage.alt = cardData.name;
+//})
+
 //Слушатели для закрытия попапов
 editPopupClose.addEventListener('click', () => {
   closePopup(editPopup)
@@ -144,6 +173,10 @@ editPopupClose.addEventListener('click', () => {
 
 addPopupClose.addEventListener('click', () => {
   closePopup(addPopup)
+});
+
+imagePopupClose.addEventListener('click', () => {
+  closePopup(imagePopup)
 });
 
 //Нажатие на "сохранить" сохранит редакцию профиля 

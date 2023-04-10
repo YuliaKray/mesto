@@ -1,18 +1,4 @@
-/*@keyframes open-popup{
-  from{
-    opacity: 0;
-  }
-  50%{
-    opacity: 0.5;
-  }
-  to{
-    opacity: 1;
-  }
-}*/
-
 .popup_open{
-  /*display: flex;*/
   visibility: visible;
   opacity: 1;
-  /*animation: open-popup 0.2s linear;*/
 }
