@@ -31,7 +31,7 @@ const editPopup = document.querySelector('.popup_type_edit');
 const editPopupClose = editPopup.querySelector('.popup__close');
 const editPopupName = editPopup.querySelector('.popup__form-text_type_name');
 const editPopupDescription = editPopup.querySelector('.popup__form-text_type_description');
-const formElement = editPopup.querySelector('.popup__form');
+const editFormElement = editPopup.querySelector('.popup__form');
 const nameInput = document.querySelector('.profile__name');
 const jodInput = document.querySelector('.profile__caption');
 
@@ -39,6 +39,10 @@ const jodInput = document.querySelector('.profile__caption');
 const addButton = document.querySelector('.profile__add-button');
 const addPopup = document.querySelector('.popup_type_add');
 const addPopupClose = addPopup.querySelector('.popup__close');
+const addFormElement = addPopup.querySelector('.popup__form')
+const addPopupPlace = addPopup.querySelector('.popup__form-text_type_place');
+const addPopupImage = addPopup.querySelector('.popup__form-text_type_image-link');
+//const placeInput = document.querySelector('.')
 const cardTemplate = document.querySelector('.card-template');
 const cardsGrid = document.querySelector('.cards');
 
@@ -61,7 +65,7 @@ function closePopup(popup){
 }
 
 //Функция для сохранения редактирования профиля
-function handleFormSubmit(event){ 
+function handleEditFormSubmit(event){ 
   event.preventDefault();
 
   nameInput.textContent = editPopupName.value;
@@ -92,6 +96,21 @@ const createCardElement = (cardData) => {
   likeButton.addEventListener('click', handleLike);
 
   return cardElement;
+}
+
+function handleAddFormSubmit(event){
+  event.preventDefault();
+
+  const placeInput = addPopupPlace.value;
+  const imageInput = addPopupImage.value;
+  const cardsData = {
+    name,
+    link  //ЗДЕСЬ ЧТО-ТО НЕ ТАК!!!
+  };
+
+
+  closePopup(addPopup);
+  console.log(addPopupPlace);
 }
 
 //Функция добавляет массив карточек в изначальный грид-контейнер CARD
@@ -128,4 +147,6 @@ addPopupClose.addEventListener('click', () => {
 });
 
 //Нажатие на "сохранить" сохранит редакцию профиля 
-formElement.addEventListener('submit', handleFormSubmit); 
+editFormElement.addEventListener('submit', handleEditFormSubmit); 
+
+addFormElement.addEventListener('submit', handleAddFormSubmit);
