@@ -1,29 +1,4 @@
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-]; 
+import { initialCards } from "./initialCards.js";
 
 //Переменные для редактирования профиля
 const editButton = document.querySelector('.profile__edit-button');
@@ -51,23 +26,14 @@ const imagePopupClose = imagePopup.querySelector('.popup__close');
 const bigImage = imagePopup.querySelector('.popup__image');
 const captionImage = imagePopup.querySelector('.popup__caption');
 
-console.log(bigImage)
-
 //Функции открытия попапов
 function openPopup(popup) {
-  popup.classList.add("popup_open");
-  //editPopupName.value = nameInput.textContent;  //Спорный вариант, надо думать еще
-  //editPopupDescription.value = jodInput.textContent;
+  popup.classList.add("popup_opened");
 }
-//function openPopupEdit(){   Вариант старого открытия попапа
-//  editPopup.classList.add('popup_open');
-//  editPopupName.value = nameInput.textContent;
-//  editPopupDescription.value = jodInput.textContent;
-//}
 
 //Функция закрытия попапов
 function closePopup(popup){
-  popup.classList.remove("popup_open");
+  popup.classList.remove("popup_opened");
 }
 
 //Функция для сохранения редактирования профиля
@@ -108,13 +74,11 @@ const createCardElement = (cardData) => {
 
 //Функция для открытия попапов картинок
 function openImagePopup(cardData) {
-  captionImage.textContent = cardData.name//cardName.textContent;
-  bigImage.alt = cardData.name;//cardImage.alt;
-  bigImage.srс = cardData.link;//cardImage.src;
-
-  console.log(bigImage)
+  captionImage.textContent = cardData.name
+  bigImage.alt = cardData.name;
+  bigImage.src = cardData.link;
   
-  imagePopup.classList.add('popup_open');
+  openPopup(imagePopup);
 }
 
 //Функция добавляет новую карточку, которую вводят в input 
@@ -128,14 +92,19 @@ function handleAddFormSubmit(event){
     link,
   };
   
-  addCardElement(createCardElement(cardData));
-  
+  addNewCardElement(createCardElement(cardData));
+
   closePopup(addPopup);
 }
 
 //Функция добавляет массив карточек в изначальный грид-контейнер CARD
 const addCardElement = (cardElement) =>{
-  cardsGrid.prepend(cardElement)
+  cardsGrid.append(cardElement)
+}
+
+//Функция добавляет новую карточку в начало
+const addNewCardElement = (cardElement) =>{
+    cardsGrid.prepend(cardElement)
 }
 
 //forEach делает действие, которое записано в функции, с каждым элементом массива
@@ -148,23 +117,13 @@ initialCards.forEach((card) => {
 //Слушатели открытия попапов
 editButton.addEventListener('click', () => {
   openPopup(editPopup);
-  editPopupName.value = nameInput.textContent;  //Спорный вариант, надо думать еще
+  editPopupName.value = nameInput.textContent;
   editPopupDescription.value = jodInput.textContent;
 }); 
 
 addButton.addEventListener('click', () => {
   openPopup(addPopup)
 });
-
-//imageButton.addEventListener('click', () => {
-//  openPopup(imagePopup);
-//  const cardElement = cardTemplate.content.querySelector('.card').cloneNode(true);
-//  const cardName = cardElement.querySelector('.card__text');
-//  const cardImage = cardElement.querySelector('.card__image');
-//  cardName.textContent = cardData.name;
-//  cardImage.src = cardData.link;
-//  cardImage.alt = cardData.name;
-//})
 
 //Слушатели для закрытия попапов
 editPopupClose.addEventListener('click', () => {

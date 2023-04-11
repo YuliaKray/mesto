@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./scripts/index.js" type="module"></script>
   <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto Russia</title>
 </head>
@@ -50,7 +51,7 @@
       </form>
     </div>
   </section>
-  <section class="popup popup_type_image">
+  <section class="popup popup_type_image" aria-label="Картинка">
     <figure class="popup__figure">
       <button type="button" class="popup__close" aria-label="Х"></button>
       <img class="popup__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
@@ -59,12 +60,12 @@
   </section>
   <template class="card-template">
     <article class="card">
-      <button class="card__delete" type="button" aria-label="Удалить" title="Удалить" title="Удалить"></button>
+      <button class="card__delete" type="button" aria-label="Удалить" title="Удалить"></button>
       <img class="card__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
       <h2 class="card__text">Карачаевск</h2>
       <button class="card__like" type="button" aria-label="Лайк" title="Лайк"></button>
     </article>
   </template>
-  <script src="./scripts/index.js"></script>
+ <!-- <script src="./scripts/index.js"></script>-->
 </body>
 </html>
