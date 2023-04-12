@@ -1,22 +1,22 @@
 import { initialCards } from "./initialCards.js";
 
 //Переменные для редактирования профиля
-const editButton = document.querySelector('.profile__edit-button');
-const editPopup = document.querySelector('.popup_type_edit');
-const editPopupClose = editPopup.querySelector('.popup__close');
-const editPopupName = editPopup.querySelector('.popup__form-text_type_name');
-const editPopupDescription = editPopup.querySelector('.popup__form-text_type_description');
-const editFormElement = editPopup.querySelector('.popup__form');
+const buttonEdit = document.querySelector('.profile__edit-button');
+const popupEdit = document.querySelector('.popup_type_edit');
+const popupEditClose = popupEdit.querySelector('.popup__close');
+const popupEditName = popupEdit.querySelector('.popup__form-text_type_name');
+const popupEditDescription = popupEdit.querySelector('.popup__form-text_type_description');
+const formEditElement = popupEdit.querySelector('.popup__form');
 const nameInput = document.querySelector('.profile__name');
 const jodInput = document.querySelector('.profile__caption');
 
 //Переменные для добавления картинок
-const addButton = document.querySelector('.profile__add-button');
-const addPopup = document.querySelector('.popup_type_add');
-const addPopupClose = addPopup.querySelector('.popup__close');
-const addFormElement = addPopup.querySelector('.popup__form')
-const placeInput = addPopup.querySelector('.popup__form-text_type_place');
-const imageInput = addPopup.querySelector('.popup__form-text_type_image-link');
+const buttonAdd = document.querySelector('.profile__add-button');
+const popupAdd = document.querySelector('.popup_type_add');
+const popupAddClose = popupAdd.querySelector('.popup__close');
+const formAddElement = popupAdd.querySelector('.popup__form')
+const placeInput = popupAdd.querySelector('.popup__form-text_type_place');
+const imageInput = popupAdd.querySelector('.popup__form-text_type_image-link');
 const cardTemplate = document.querySelector('.card-template');
 const cardsGrid = document.querySelector('.cards');
 
@@ -40,9 +40,9 @@ function closePopup(popup){
 function handleEditFormSubmit(event){ 
   event.preventDefault();
 
-  nameInput.textContent = editPopupName.value;
-  jodInput.textContent = editPopupDescription.value;
-  closePopup(editPopup);
+  nameInput.textContent = popupEditName.value;
+  jodInput.textContent = popupEditDescription.value;
+  closePopup(popupEdit);
 }
 
 //Функция для копирования массива картинок
@@ -56,18 +56,18 @@ const createCardElement = (cardData) => {
 
   cardImage.addEventListener('click', () => openImagePopup(cardData));
 
-  const deleteButton = cardElement.querySelector('.card__delete');
-  const likeButton = cardElement.querySelector('.card__like');
+  const buttonDelete = cardElement.querySelector('.card__delete');
+  const buttonLike = cardElement.querySelector('.card__like');
 
   function handleDelete() {
     cardElement.remove();
   }
   function handleLike() {
-    likeButton.classList.toggle('card__like_active');
+    buttonLike.classList.toggle('card__like_active');
   }
 
-  deleteButton.addEventListener('click', handleDelete);
-  likeButton.addEventListener('click', handleLike);
+  buttonDelete.addEventListener('click', handleDelete);
+  buttonLike.addEventListener('click', handleLike);
 
   return cardElement;
 }
@@ -94,7 +94,7 @@ function handleAddFormSubmit(event){
   
   addNewCardElement(createCardElement(cardData));
 
-  closePopup(addPopup);
+  closePopup(popupAdd);
 }
 
 //Функция добавляет массив карточек в изначальный грид-контейнер CARD
@@ -115,23 +115,23 @@ initialCards.forEach((card) => {
 
 
 //Слушатели открытия попапов
-editButton.addEventListener('click', () => {
-  openPopup(editPopup);
-  editPopupName.value = nameInput.textContent;
-  editPopupDescription.value = jodInput.textContent;
+buttonEdit.addEventListener('click', () => {
+  openPopup(popupEdit);
+  popupEditName.value = nameInput.textContent;
+  popupEditDescription.value = jodInput.textContent;
 }); 
 
-addButton.addEventListener('click', () => {
-  openPopup(addPopup)
+buttonAdd.addEventListener('click', () => {
+  openPopup(popupAdd)
 });
 
 //Слушатели для закрытия попапов
-editPopupClose.addEventListener('click', () => {
-  closePopup(editPopup)
+popupEditClose.addEventListener('click', () => {
+  closePopup(popupEdit)
 }); 
 
-addPopupClose.addEventListener('click', () => {
-  closePopup(addPopup)
+popupAddClose.addEventListener('click', () => {
+  closePopup(popupAdd)
 });
 
 imagePopupClose.addEventListener('click', () => {
@@ -139,6 +139,6 @@ imagePopupClose.addEventListener('click', () => {
 });
 
 //Нажатие на "сохранить" сохранит редакцию профиля 
-editFormElement.addEventListener('submit', handleEditFormSubmit); 
+formEditElement.addEventListener('submit', handleEditFormSubmit); 
 
-addFormElement.addEventListener('submit', handleAddFormSubmit);
+formAddElement.addEventListener('submit', handleAddFormSubmit);

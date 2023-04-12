@@ -1,6 +1,6 @@
 .popup__image{
   object-fit: cover;
   object-position: center;
-  max-width: inherit;
-  max-height: inherit;
+  max-width: 75vw;
+  max-height: 75vh;
 }
