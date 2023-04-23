@@ -26,14 +26,29 @@ const imagePopupClose = imagePopup.querySelector('.popup__close');
 const bigImage = imagePopup.querySelector('.popup__image');
 const captionImage = imagePopup.querySelector('.popup__caption');
 
+const popupArray = Array.from(document.querySelectorAll('.popup'));
+
+
 //Функции открытия попапов
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  document.addEventListener('keydown', closePopupEsc);
+}
+
+//Функиця закроет попап при нажатии на esc
+function closePopupEsc(event) {
+  if (event.key === "Escape") {
+    popupArray.forEach((popup) => {
+      closePopup(popup)
+    })
+  }
 }
 
 //Функция закрытия попапов
 function closePopup(popup){
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', closePopupEsc);
+
 }
 
 //Функция для сохранения редактирования профиля
@@ -107,6 +122,19 @@ const addNewCardElement = (cardElement) =>{
     cardsGrid.prepend(cardElement)
 }
 
+//Функция закрывает попапы, если нажать на оверлей
+function closePopupMouse(popupArray) {
+  popupArray.forEach((popup) => {
+     popup.addEventListener('click', (event) => {
+      if (event.target.classList.contains('popup')) { 
+        closePopup(popup)
+      }
+    }) 
+  })
+}
+
+closePopupMouse(popupArray); //вызаем функцию закрытия попапа через оверлей
+
 //forEach делает действие, которое записано в функции, с каждым элементом массива
 //initialCards - название изначального массива 
 initialCards.forEach((card) => {
@@ -128,7 +156,7 @@ buttonAdd.addEventListener('click', () => {
 //Слушатели для закрытия попапов
 popupEditClose.addEventListener('click', () => {
   closePopup(popupEdit)
-}); 
+});
 
 popupAddClose.addEventListener('click', () => {
   closePopup(popupAdd)
@@ -137,6 +165,8 @@ popupAddClose.addEventListener('click', () => {
 imagePopupClose.addEventListener('click', () => {
   closePopup(imagePopup)
 });
+
+
 
 //Нажатие на "сохранить" сохранит редакцию профиля 
 formEditElement.addEventListener('submit', handleEditFormSubmit); 

@@ -1,5 +1,6 @@
 .popup__form-text{
-  margin-bottom: 30px;
+  margin-bottom: 34px;
+ /* margin-top: 30px;*/
   border: 0;
   width: 100%;
   height: 27px;
@@ -11,11 +12,16 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.21;
+  position: relative;
 }
 
-.popup__form-text:last-of-type{
+/*.popup__form-text:last-of-type{
   margin-bottom: 0;
 }
+
+.popup__form-text:first-of-type{
+  margin-bottom: 0;
+}*/
 
 .popup__form-text:focus{
   outline-color: blue;
