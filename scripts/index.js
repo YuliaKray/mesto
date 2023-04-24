@@ -3,7 +3,6 @@ import { initialCards } from "./initialCards.js";
 //Переменные для редактирования профиля
 const buttonEdit = document.querySelector('.profile__edit-button');
 const popupEdit = document.querySelector('.popup_type_edit');
-const popupEditClose = popupEdit.querySelector('.popup__close');
 const popupEditName = popupEdit.querySelector('.popup__form-text_type_name');
 const popupEditDescription = popupEdit.querySelector('.popup__form-text_type_description');
 const formEditElement = popupEdit.querySelector('.popup__form');
@@ -13,7 +12,6 @@ const jodInput = document.querySelector('.profile__caption');
 //Переменные для добавления картинок
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAdd = document.querySelector('.popup_type_add');
-const popupAddClose = popupAdd.querySelector('.popup__close');
 const formAddElement = popupAdd.querySelector('.popup__form')
 const placeInput = popupAdd.querySelector('.popup__form-text_type_place');
 const imageInput = popupAdd.querySelector('.popup__form-text_type_image-link');
@@ -22,7 +20,6 @@ const cardsGrid = document.querySelector('.cards');
 
 //Переменные для попапа просмотра картинки
 const imagePopup = document.querySelector('.popup_type_image');
-const imagePopupClose = imagePopup.querySelector('.popup__close');
 const bigImage = imagePopup.querySelector('.popup__image');
 const captionImage = imagePopup.querySelector('.popup__caption');
 
@@ -35,13 +32,19 @@ function openPopup(popup) {
   document.addEventListener('keydown', closePopupEsc);
 }
 
+//Функция открытия попапа редактирования профиля
+function openPopupEdit() {
+  openPopup(popupEdit);
+  popupEditName.value = nameInput.textContent;
+  popupEditDescription.value = jodInput.textContent;
+}
+
 //Функиця закроет попап при нажатии на esc
 function closePopupEsc(event) {
+  const popupOpened = document.querySelector('.popup_opened');
   if (event.key === "Escape") {
-    popupArray.forEach((popup) => {
-      closePopup(popup)
-    })
-  }
+    closePopup(popupOpened);
+  } 
 }
 
 //Функция закрытия попапов
@@ -49,6 +52,12 @@ function closePopup(popup){
   popup.classList.remove("popup_opened");
   document.removeEventListener('keydown', closePopupEsc);
 
+  const inputsArray = Array.from(popup.querySelectorAll('.popup__form-text'));
+  inputsArray.forEach(function(input) {
+    const errorElement = popup.querySelector(`#error-${input.name}`);
+    
+    setInputValidState({ inputErrorClass: 'popup__form-text_invalid', errorClass: 'popup__error-message_visible' }, input, errorElement)
+  })
 }
 
 //Функция для сохранения редактирования профиля
@@ -108,32 +117,35 @@ function handleAddFormSubmit(event){
   };
   
   addNewCardElement(createCardElement(cardData));
-
+  
+  formAddElement.reset();
+  toggleButtonValidity({ submitButtonSelector: '.popup__submit-button', inactiveButtonClass: 'popup__submit-button_disabled', }, formAddElement);
+  
   closePopup(popupAdd);
 }
 
 //Функция добавляет массив карточек в изначальный грид-контейнер CARD
-const addCardElement = (cardElement) =>{
-  cardsGrid.append(cardElement)
+const addCardElement = (cardTemplate) =>{
+  cardsGrid.append(cardTemplate)
 }
 
 //Функция добавляет новую карточку в начало
-const addNewCardElement = (cardElement) =>{
-    cardsGrid.prepend(cardElement)
+const addNewCardElement = (cardTemplate) =>{
+    cardsGrid.prepend(cardTemplate)
 }
 
-//Функция закрывает попапы, если нажать на оверлей
+//Функция закрывает попапы, если нажать на оверлей и крестик
 function closePopupMouse(popupArray) {
   popupArray.forEach((popup) => {
      popup.addEventListener('click', (event) => {
-      if (event.target.classList.contains('popup')) { 
+      if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) { 
         closePopup(popup)
       }
     }) 
   })
 }
 
-closePopupMouse(popupArray); //вызаем функцию закрытия попапа через оверлей
+closePopupMouse(popupArray); //вызаем функцию закрытия попапа через оверлей и крестик
 
 //forEach делает действие, которое записано в функции, с каждым элементом массива
 //initialCards - название изначального массива 
@@ -143,32 +155,42 @@ initialCards.forEach((card) => {
 
 
 //Слушатели открытия попапов
-buttonEdit.addEventListener('click', () => {
-  openPopup(popupEdit);
-  popupEditName.value = nameInput.textContent;
-  popupEditDescription.value = jodInput.textContent;
-}); 
+buttonEdit.addEventListener('click', openPopupEdit);
 
 buttonAdd.addEventListener('click', () => {
   openPopup(popupAdd)
 });
 
-//Слушатели для закрытия попапов
-popupEditClose.addEventListener('click', () => {
-  closePopup(popupEdit)
-});
-
-popupAddClose.addEventListener('click', () => {
-  closePopup(popupAdd)
-});
-
-imagePopupClose.addEventListener('click', () => {
-  closePopup(imagePopup)
-});
-
-
-
 //Нажатие на "сохранить" сохранит редакцию профиля 
 formEditElement.addEventListener('submit', handleEditFormSubmit); 
 
 formAddElement.addEventListener('submit', handleAddFormSubmit);
+
+
+
+//const popupEditClose = popupEdit.querySelector('.popup__close');
+//const popupAddClose = popupAdd.querySelector('.popup__close');
+//const imagePopupClose = imagePopup.querySelector('.popup__close');
+
+
+//Старый вариант слушателя для открытия попапа редактирования
+//buttonEdit.addEventListener('click', () => {
+  //openPopup(popupEdit);
+  //popupEditName.value = nameInput.textContent;
+  //popupEditDescription.value = jodInput.textContent;
+//}
+
+//Слушатели для закрытия попапов (теперь не нужны, 
+//так как это реализована в функции closePopupMouse)
+
+//popupEditClose.addEventListener('click', () => {
+//  closePopup(popupEdit)
+//});
+
+//popupAddClose.addEventListener('click', () => {
+//  closePopup(popupAdd)
+//});
+
+//imagePopupClose.addEventListener('click', () => {
+//  closePopup(imagePopup)
+//});

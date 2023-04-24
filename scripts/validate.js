@@ -1,72 +1,72 @@
 //Функция валидного состояния инпута
-function setInputValidState(config, input, errorElement) {
-  input.classList.remove(config.inputErrorClass);
-  errorElement.classList.remove(config.errorClass);
+function setInputValidState({ inputErrorClass, errorClass }, input, errorElement) {
+  input.classList.remove(inputErrorClass);
+  errorElement.classList.remove(errorClass);
   errorElement.textContent = "";
 }
 
 //Функция невалидного состояния инпута
-function setInputInvalidState(config, input, errorElement) {
-  input.classList.add(config.inputErrorClass);
+function setInputInvalidState({ inputErrorClass, errorClass }, input, errorElement) {
+  input.classList.add(inputErrorClass);
   errorElement.textContent = input.validationMessage;
-  errorElement.classList.add(config.errorClass);
+  errorElement.classList.add(errorClass);
 }
 
 //Функция проверки валидности инпутов
-function checkInputValidity(config, form, input) {
+function checkInputValidity(rest, form, input) {
   const errorElement = form.querySelector(`#error-${input.name}`);
 
   if (input.validity.valid) {  //можно поставить метод input.checkValidity() в if, будет также работать
-    setInputValidState(config, input, errorElement);
+    setInputValidState(rest, input, errorElement);
   } else {
-    setInputInvalidState(config, input, errorElement);
+    setInputInvalidState(rest, input, errorElement);
   }
 }
 
 //Функция дизактивации кнопки сохранить
-function disableButton(config, button) {
+function disableButton({ inactiveButtonClass }, button) {
   button.setAttribute('disabled', '');
-  button.classList.add(config.inactiveButtonClass);
+  button.classList.add(inactiveButtonClass);
 }
 
 //Функция активации кнопки сохранить
-function enableButton(config, button) {
+function enableButton({ inactiveButtonClass }, button) {
   button.removeAttribute('disabled');
-  button.classList.remove(config.inactiveButtonClass);
+  button.classList.remove(inactiveButtonClass);
 }
 
 
 //Функция изменения состояний кнопки сохранить
-function toggleButtonValidity(config, form) {
-  const submitButton = form.querySelector(config.submitButtonSelector);
+function toggleButtonValidity({ submitButtonSelector, ...rest}, form) {
+  const submitButton = form.querySelector(submitButtonSelector);
 
   if (form.checkValidity()) {
-    enableButton(config, submitButton);
+    enableButton(rest, submitButton);
   } else {
-    disableButton(config, submitButton);
+    disableButton(rest, submitButton);
   }
 }
 
 //Функция перебора валидации в инпутах
-function setEventListeners(config, form) {
-  toggleButtonValidity(config, form);
+function setEventListeners( { inputSelector, ...rest }, form) {
+  toggleButtonValidity(rest, form);
 
-  const inputs = form.querySelectorAll(config.inputSelector);
+  const inputs = form.querySelectorAll(inputSelector);
   const inputsArray = Array.from(inputs);
 
   inputsArray.forEach(function(input) {
     input.addEventListener('input', () => {
-      checkInputValidity(config, form, input);
-      toggleButtonValidity(config, form);
+      checkInputValidity(rest, form, input);
+      toggleButtonValidity(rest, form);
     });
   })
 }
 
 //Функция для выбора нужной формы для валидации
-function enableValidation(config) {
-  const formList = Array.from(document.querySelectorAll(config.formSelector));
+function enableValidation({ formSelector, ...rest}) {
+  const formList = Array.from(document.querySelectorAll(formSelector));
   formList.forEach((form) => {
-    setEventListeners(config, form);
+    setEventListeners(rest, form);
   });
 };
 
