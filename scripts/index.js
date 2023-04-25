@@ -32,11 +32,31 @@ function openPopup(popup) {
   document.addEventListener('keydown', closePopupEsc);
 }
 
+//Функция для отчистки ошибок при повторном открытиии попапа
+function cleanFormError(popup){
+  
+  const inputsArray = Array.from(popup.querySelectorAll('.popup__form-text'));
+  inputsArray.forEach(function(input) {
+    const errorElement = popup.querySelector(`#error-${input.name}`);
+    
+    setInputValidState({ inputErrorClass: 'popup__form-text_invalid', errorClass: 'popup__error-message_visible' }, input, errorElement)
+  })
+}
+
 //Функция открытия попапа редактирования профиля
 function openPopupEdit() {
+  cleanFormError(popupEdit);
+  
   openPopup(popupEdit);
   popupEditName.value = nameInput.textContent;
   popupEditDescription.value = jodInput.textContent;
+}
+
+//Функция отрытия попапа добавления картинок
+function openPopupAdd() {
+  cleanFormError(popupAdd);
+
+  openPopup(popupAdd);
 }
 
 //Функиця закроет попап при нажатии на esc
@@ -51,13 +71,6 @@ function closePopupEsc(event) {
 function closePopup(popup){
   popup.classList.remove("popup_opened");
   document.removeEventListener('keydown', closePopupEsc);
-
-  const inputsArray = Array.from(popup.querySelectorAll('.popup__form-text'));
-  inputsArray.forEach(function(input) {
-    const errorElement = popup.querySelector(`#error-${input.name}`);
-    
-    setInputValidState({ inputErrorClass: 'popup__form-text_invalid', errorClass: 'popup__error-message_visible' }, input, errorElement)
-  })
 }
 
 //Функция для сохранения редактирования профиля
@@ -157,9 +170,7 @@ initialCards.forEach((card) => {
 //Слушатели открытия попапов
 buttonEdit.addEventListener('click', openPopupEdit);
 
-buttonAdd.addEventListener('click', () => {
-  openPopup(popupAdd)
-});
+buttonAdd.addEventListener('click', openPopupAdd);
 
 //Нажатие на "сохранить" сохранит редакцию профиля 
 formEditElement.addEventListener('submit', handleEditFormSubmit); 
