@@ -1,7 +1,7 @@
 import { initialCards } from "./initialCards.js";
 import Card from "./Card.js";
 import { FormValidator, config} from "./FormValidator.js";
-import { openImagePopup, openPopup, closePopupEsc, closePopup } from "./utils.js"
+import { openPopup, closePopup } from "./utils.js"
 
 //Переменные для редактирования профиля
 const buttonEdit = document.querySelector('.profile__edit-button');
