@@ -1,4 +1,6 @@
 import { initialCards } from "./initialCards.js";
+import Card from "./Card.js";
+import { FormValidator, config} from "./FormValidator.js";
 
 //Переменные для редактирования профиля
 const buttonEdit = document.querySelector('.profile__edit-button');
@@ -25,6 +27,12 @@ const captionImage = imagePopup.querySelector('.popup__caption');
 
 const popupArray = Array.from(document.querySelectorAll('.popup'));
 
+//Вызов валидации форм
+const validatorEdit = new FormValidator (config, formEditElement);
+const validatorAdd = new FormValidator (config, formAddElement);
+
+validatorEdit.enableValidation();
+validatorAdd.enableValidation();
 
 //Функции открытия попапов
 function openPopup(popup) {
@@ -36,10 +44,16 @@ function openPopup(popup) {
 function cleanFormError(popup){
   
   const inputsArray = Array.from(popup.querySelectorAll('.popup__form-text'));
-  inputsArray.forEach(function(input) {
+  inputsArray.forEach((input) => {
     const errorElement = popup.querySelector(`#error-${input.name}`);
     
-    setInputValidState({ inputErrorClass: 'popup__form-text_invalid', errorClass: 'popup__error-message_visible' }, input, errorElement)
+    if (popup === popupEdit) {
+      validatorEdit._setInputValidState(input, errorElement);
+      validatorEdit._toggleButtonValidity();
+    } else {
+      validatorAdd._setInputValidState(input, errorElement);
+      validatorAdd._toggleButtonValidity();
+    }
   })
 }
 
@@ -82,35 +96,8 @@ function handleEditFormSubmit(event){
   closePopup(popupEdit);
 }
 
-//Функция для копирования массива картинок
-const createCardElement = (cardData) => {
-  const cardElement = cardTemplate.content.querySelector('.card').cloneNode(true);
-  const cardName = cardElement.querySelector('.card__text');
-  const cardImage = cardElement.querySelector('.card__image');
-  cardName.textContent = cardData.name;
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-
-  cardImage.addEventListener('click', () => openImagePopup(cardData));
-
-  const buttonDelete = cardElement.querySelector('.card__delete');
-  const buttonLike = cardElement.querySelector('.card__like');
-
-  function handleDelete() {
-    cardElement.remove();
-  }
-  function handleLike() {
-    buttonLike.classList.toggle('card__like_active');
-  }
-
-  buttonDelete.addEventListener('click', handleDelete);
-  buttonLike.addEventListener('click', handleLike);
-
-  return cardElement;
-}
-
 //Функция для открытия попапов картинок
-function openImagePopup(cardData) {
+export function openImagePopup(cardData) {
   captionImage.textContent = cardData.name
   bigImage.alt = cardData.name;
   bigImage.src = cardData.link;
@@ -129,22 +116,24 @@ function handleAddFormSubmit(event){
     link,
   };
   
-  addNewCardElement(createCardElement(cardData));
+  const cardCreation = new Card (cardData, cardTemplate); 
+
+  addNewCardElement(cardCreation.createCardElement())
   
   formAddElement.reset();
-  toggleButtonValidity({ submitButtonSelector: '.popup__submit-button', inactiveButtonClass: 'popup__submit-button_disabled', }, formAddElement);
+  validatorAdd._toggleButtonValidity()
   
   closePopup(popupAdd);
 }
 
 //Функция добавляет массив карточек в изначальный грид-контейнер CARD
 const addCardElement = (cardTemplate) =>{
-  cardsGrid.append(cardTemplate)
+  cardsGrid.append(cardTemplate);
 }
 
 //Функция добавляет новую карточку в начало
 const addNewCardElement = (cardTemplate) =>{
-    cardsGrid.prepend(cardTemplate)
+  cardsGrid.prepend(cardTemplate);
 }
 
 //Функция закрывает попапы, если нажать на оверлей и крестик
@@ -163,9 +152,9 @@ closePopupMouse(popupArray); //вызаем функцию закрытия по
 //forEach делает действие, которое записано в функции, с каждым элементом массива
 //initialCards - название изначального массива 
 initialCards.forEach((card) => {
-  addCardElement(createCardElement(card));
+  const cardCreation = new Card (card, cardTemplate)
+  addCardElement(cardCreation.createCardElement());
 });
-
 
 //Слушатели открытия попапов
 buttonEdit.addEventListener('click', openPopupEdit);
@@ -176,32 +165,3 @@ buttonAdd.addEventListener('click', openPopupAdd);
 formEditElement.addEventListener('submit', handleEditFormSubmit); 
 
 formAddElement.addEventListener('submit', handleAddFormSubmit);
-
-
-
-//const popupEditClose = popupEdit.querySelector('.popup__close');
-//const popupAddClose = popupAdd.querySelector('.popup__close');
-//const imagePopupClose = imagePopup.querySelector('.popup__close');
-
-
-//Старый вариант слушателя для открытия попапа редактирования
-//buttonEdit.addEventListener('click', () => {
-  //openPopup(popupEdit);
-  //popupEditName.value = nameInput.textContent;
-  //popupEditDescription.value = jodInput.textContent;
-//}
-
-//Слушатели для закрытия попапов (теперь не нужны, 
-//так как это реализована в функции closePopupMouse)
-
-//popupEditClose.addEventListener('click', () => {
-//  closePopup(popupEdit)
-//});
-
-//popupAddClose.addEventListener('click', () => {
-//  closePopup(popupAdd)
-//});
-
-//imagePopupClose.addEventListener('click', () => {
-//  closePopup(imagePopup)
-//});
