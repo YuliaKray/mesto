@@ -1,9 +1,10 @@
 import { openImagePopup } from "./utils.js";
 
 class Card {
-  constructor (cardData, cardTemplate) {
+  constructor (cardData, cardTemplate, handleCardClick) {
     this._cardData = cardData;
     this._cardTemplate = cardTemplate;
+    this._handleCardClick = handleCardClick;
   }
 
   //Метод для передачи нужных названий и ссылки для создания карточки
@@ -33,7 +34,10 @@ class Card {
     buttonDelete.addEventListener('click', this._handleDelete);
     buttonLike.addEventListener('click', () => {this._handleLike(buttonLike)});
     //Слушатель нажатия на картинку и открытия зуум попапа
-    this._cardImage.addEventListener('click', () => {openImagePopup(this._cardData)});
+    // this._cardImage.addEventListener('click', () => {openImagePopup(this._cardData)});
+    this._cardImage.addEventListener('click', () => {this._handleCardClick;
+    console.log(this._handleCardClick)});
+
   }
 
   //метод для возврата карточки

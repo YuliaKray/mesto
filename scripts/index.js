@@ -1,7 +1,10 @@
 import { initialCards } from "./initialCards.js";
 import Card from "./Card.js";
 import { FormValidator, config} from "./FormValidator.js";
-import { openPopup, closePopup } from "./utils.js"
+import { openPopup, closePopup } from "./utils.js";
+import Popup from "./Popup.js"
+import { PopupWithImage } from "./PopupWithImage.js";
+// import { PopupWithForm } from "./PopupWithForm.js";
 
 //Переменные для редактирования профиля
 const buttonEdit = document.querySelector('.profile__edit-button');
@@ -30,6 +33,11 @@ const validatorAdd = new FormValidator (config, formAddElement);
 
 validatorEdit.enableValidation();
 validatorAdd.enableValidation();
+
+// Создание попапов форм
+
+const popupImage = new PopupWithImage (document.querySelector('.popup_type_image'));
+// const popupEditForm = new PopupWithForm (popupEdit, { handleFormSabmit: () => {} })
 
 
 //Функция открытия попапа редактирования профиля
@@ -61,7 +69,10 @@ function handleEditFormSubmit(event){
 
 //Функция создания карточки из класса
 function createCard(cardData, cardTemplate) {
-  const cardCreation = new Card (cardData, cardTemplate); 
+  const cardCreation = new Card (cardData, cardTemplate, (cardData) => {
+    console.log("click")
+    popupImage.open(cardData);
+  }); 
   return cardCreation.createCardElement();
 }
 

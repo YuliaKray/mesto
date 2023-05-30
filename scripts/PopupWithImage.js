@@ -1,23 +1,24 @@
 import Popup from "./Popup.js";
 
-export class PopupWithImage extends Popup () {
-  constructor(cardData, popupSelector) {
+export class PopupWithImage extends Popup {
+  constructor(popupSelector) {
     super(popupSelector);
-    this._name = cardData.name;
-    this._link = cardData.link;
+    // this._name = cardData.name;
+    // this._link = cardData.link;
   }
 
-  open() {
+  open(cardData) {
+    super.open();
+    console.log(cardData)
     // const imagePopup = document.querySelector('.popup_type_image');
-    const bigImage = super._popupSelector.querySelector('.popup__image');
-    const captionImage = super._popupSelector.querySelector('.popup__caption');
+    // const bigImage = super._popupSelector.querySelector('.popup__image');
+    // const captionImage = super._popupSelector.querySelector('.popup__caption');
   
-    captionImage.textContent = this._name;
-    bigImage.alt = this._name;
-    bigImage.src = this._link;
+    // captionImage.textContent = cardData.name;
+    // bigImage.alt = cardData.name;
+    // bigImage.src = cardData.link;
 
-    this._popupSelector.classList.add("popup_opened");
-    document.addEventListener('keydown', () => {super._handleEscClose()});
+
   }
 }
 
