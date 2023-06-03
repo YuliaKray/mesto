@@ -1,10 +1,11 @@
-import { initialCards } from "./initialCards.js";
-import Card from "./Card.js";
-import { FormValidator, config} from "./FormValidator.js";
-import { PopupWithImage } from "./PopupWithImage.js";
-import { PopupWithForm } from "./PopupWithForm.js";
-import UserInfo from "./UserInfo.js";
-import Section from "./Section.js";
+import './index.css';
+import { initialCards } from "../components/initialCards.js";
+import Card from "../components/Card.js";
+import { FormValidator, config} from "../components/FormValidator.js";
+import { PopupWithImage } from "../components/PopupWithImage.js";
+import { PopupWithForm } from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
+import Section from "../components/Section.js";
 
 //Переменные для редактирования профиля
 const buttonEdit = document.querySelector('.profile__edit-button');
@@ -29,7 +30,6 @@ validatorAdd.enableValidation();
 
 //Класс Section отвечает только за вставление карточек в грид-контейнер
 const section = new Section( { 
-  // items: initialCards,
   renderer: (item) => {
     section.addInitialCards(createCard(item, cardTemplate))
   }

@@ -3,17 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="./scripts/index.js" type="module"></script>
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto Russia</title>
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" alt="Место Россия" src="./images/logo.svg">
+    <img class="header__logo" alt="Место Россия" src="<%=require('./images/logo.svg')%>">
   </header>
   <main class="main">
     <section class="profile">
-      <img class="profile__image" alt="Фото профиля" src="./images/avatar.jpg">
+      <img class="profile__image" alt="Фото профиля" src="<%=require('./images/avatar.jpg')%>">
       <div class="profile__info">
         <div class="profile__title-wrapper">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -58,14 +56,14 @@
   <section class="popup popup_type_image" aria-label="Картинка">
     <figure class="popup__figure">
       <button type="button" class="popup__close" aria-label="Х"></button>
-      <img class="popup__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
+      <img class="popup__image" alt="Карачаевск" src="">
       <figcaption class="popup__caption">Карачаевск</figcaption>
     </figure> 
   </section>
   <template class="card-template">
     <article class="card">
       <button class="card__delete" type="button" aria-label="Удалить" title="Удалить"></button>
-      <img class="card__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
+      <img class="card__image" alt="Карачаевск" src="">
       <h2 class="card__text">Карачаевск</h2>
       <button class="card__like" type="button" aria-label="Лайк" title="Лайк"></button>
     </article>
