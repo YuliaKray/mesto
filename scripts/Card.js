@@ -1,5 +1,3 @@
-import { openImagePopup } from "./utils.js";
-
 class Card {
   constructor (cardData, cardTemplate, handleCardClick) {
     this._cardData = cardData;
@@ -8,26 +6,28 @@ class Card {
   }
 
   //Метод для передачи нужных названий и ссылки для создания карточки
-  _generateCardElement = () => {
+  _generateCardElement () {
     this._cardElement = this._cardTemplate.content.querySelector('.card').cloneNode(true);
     this._cardElement.querySelector('.card__text').textContent = this._cardData.name;
     this._cardImage = this._cardElement.querySelector('.card__image');
     this._cardImage.src = this._cardData.link;
     this._cardImage.alt = this._cardData.name;
+
+    this._handleDelete = this._handleDelete.bind(this);
   }
 
   //Метод удаления карточки
-  _handleDelete = () => {
+  _handleDelete () {
     this._cardElement.remove();
   }
 
   //Метод лайка карточки
-  _handleLike = (button) => {
+  _handleLike (button) {
     button.classList.toggle('card__like_active');
   }
 
   //Всех слушатели, которые есть у карточки
-  _setListeners = () => {
+  _setListeners () {
     const buttonDelete = this._cardElement.querySelector('.card__delete');
     const buttonLike = this._cardElement.querySelector('.card__like');
 
@@ -35,13 +35,12 @@ class Card {
     buttonLike.addEventListener('click', () => {this._handleLike(buttonLike)});
     //Слушатель нажатия на картинку и открытия зуум попапа
     // this._cardImage.addEventListener('click', () => {openImagePopup(this._cardData)});
-    this._cardImage.addEventListener('click', () => {this._handleCardClick;
-    console.log(this._handleCardClick)});
+    this._cardImage.addEventListener('click', () => {this._handleCardClick();});
 
   }
 
   //метод для возврата карточки
-  createCardElement = () => {
+  createCardElement () {
     this._generateCardElement();
     this._setListeners();
     return this._cardElement;

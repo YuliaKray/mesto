@@ -1,10 +1,10 @@
 import { initialCards } from "./initialCards.js";
 import Card from "./Card.js";
 import { FormValidator, config} from "./FormValidator.js";
-import { openPopup, closePopup } from "./utils.js";
-import Popup from "./Popup.js"
 import { PopupWithImage } from "./PopupWithImage.js";
-// import { PopupWithForm } from "./PopupWithForm.js";
+import { PopupWithForm } from "./PopupWithForm.js";
+import UserInfo from "./UserInfo.js";
+import Section from "./Section.js";
 
 //Переменные для редактирования профиля
 const buttonEdit = document.querySelector('.profile__edit-button');
@@ -12,20 +12,12 @@ const popupEdit = document.querySelector('.popup_type_edit');
 const popupEditName = popupEdit.querySelector('.popup__form-text_type_name');
 const popupEditDescription = popupEdit.querySelector('.popup__form-text_type_description');
 const formEditElement = popupEdit.querySelector('.popup__form');
-const nameInput = document.querySelector('.profile__name');
-const jodInput = document.querySelector('.profile__caption');
 
 //Переменные для добавления картинок
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAdd = document.querySelector('.popup_type_add');
 const formAddElement = popupAdd.querySelector('.popup__form')
-const placeInput = popupAdd.querySelector('.popup__form-text_type_place');
-const imageInput = popupAdd.querySelector('.popup__form-text_type_image-link');
 const cardTemplate = document.querySelector('.card-template');
-const cardsGrid = document.querySelector('.cards');
-
-
-const popupArray = Array.from(document.querySelectorAll('.popup'));
 
 //Вызов валидации форм
 const validatorEdit = new FormValidator (config, formEditElement);
@@ -34,103 +26,79 @@ const validatorAdd = new FormValidator (config, formAddElement);
 validatorEdit.enableValidation();
 validatorAdd.enableValidation();
 
-// Создание попапов форм
 
-const popupImage = new PopupWithImage (document.querySelector('.popup_type_image'));
-// const popupEditForm = new PopupWithForm (popupEdit, { handleFormSabmit: () => {} })
-
-
-//Функция открытия попапа редактирования профиля
-function openPopupEdit() {
-  validatorEdit.resetForm();
-  
-  openPopup(popupEdit);
-  popupEditName.value = nameInput.textContent;
-  popupEditDescription.value = jodInput.textContent;
-}
-
-//Функция отрытия попапа добавления картинок
-function openPopupAdd() {
-  validatorAdd.resetForm();
-
-  openPopup(popupAdd);
-}
+//Класс Section отвечает только за вставление карточек в грид-контейнер
+const section = new Section( { 
+  // items: initialCards,
+  renderer: (item) => {
+    section.addInitialCards(createCard(item, cardTemplate))
+  }
+}, '.cards')
 
 
-//Функция для сохранения редактирования профиля
-function handleEditFormSubmit(event){ 
+//Создание попапа данных пользователя для вставления в section profile
+const userInfo = new UserInfo ('.profile__name', '.profile__caption');
+
+
+// Создание попапа большой картинки
+const popupImage = new PopupWithImage ('.popup_type_image');
+
+
+//Создание попапа редактирования профиля
+const popupEditForm = new PopupWithForm ('.popup_type_edit', (event) => {
   event.preventDefault();
 
-  nameInput.textContent = popupEditName.value;
-  jodInput.textContent = popupEditDescription.value;
-  closePopup(popupEdit);
-}
+  userInfo.setUserInfo(popupEditForm._getInputValues());
+  popupEditForm.close();
+});
 
 
-//Функция создания карточки из класса
-function createCard(cardData, cardTemplate) {
-  const cardCreation = new Card (cardData, cardTemplate, (cardData) => {
-    console.log("click")
-    popupImage.open(cardData);
-  }); 
-  return cardCreation.createCardElement();
-}
-
-//Функция добавляет новую карточку, которую вводят в input 
-function handleAddFormSubmit(event){
+//Создание попапа добавления картинки
+const popupAddForm = new PopupWithForm ('.popup_type_add', (event) => {
   event.preventDefault();
 
-  const name = placeInput.value;
-  const link = imageInput.value;
+  const input = popupAddForm._getInputValues();
+  const name = input.place;
+  const link = input.link;
   const cardData = {
     name,
     link,
   };
   
-  addNewCardElement(createCard(cardData, cardTemplate)); //созданная карточка встраивается в разметку
+  section.addItem(createCard(cardData, cardTemplate)); //созданная карточка встраивается в разметку
 
   formAddElement.reset();
   validatorAdd.toggleButtonValidity();
   
-  closePopup(popupAdd);
+  popupAddForm.close();
+})
+
+
+//Функция создания карточки из класса
+const createCard = (cardData, cardTemplate) => {
+  const cardCreation = new Card (cardData, cardTemplate, () => {
+    popupImage.open(cardData);
+  }); 
+  return cardCreation.createCardElement();
 }
 
-//Функция добавляет массив карточек в изначальный грид-контейнер CARD
-const addCardElement = (cardTemplate) =>{
-  cardsGrid.append(cardTemplate);
-}
 
-//Функция добавляет новую карточку в начало
-const addNewCardElement = (cardTemplate) =>{
-  cardsGrid.prepend(cardTemplate);
-}
+//Метод добавляет в разметку изначальный массив карточек
+section.renderItems(initialCards);
 
-//Функция закрывает попапы, если нажать на оверлей и крестик
-function closePopupMouse(popupArray) {
-  popupArray.forEach((popup) => {
-     popup.addEventListener('click', (event) => {
-      if (event.target.classList.contains('popup') || event.target.classList.contains('popup__close')) { 
-        closePopup(popup)
-      }
-    }) 
-  })
-}
-
-closePopupMouse(popupArray); //вызаем функцию закрытия попапа через оверлей и крестик
-
-//forEach делает действие, которое записано в функции, с каждым элементом массива
-//initialCards - название изначального массива 
-initialCards.forEach((card) => {
-  addCardElement(createCard(card, cardTemplate)); //изначальный массив встраивается в разметку с помощью класса
-});
 
 //Слушатели открытия попапов
-buttonEdit.addEventListener('click', openPopupEdit);
+buttonEdit.addEventListener('click', () => {
+  popupEditForm.open();
+  const info = userInfo.getUserInfo();
+  popupEditName.value = info.name;
+  popupEditDescription.value = info.jod
+});
 
-buttonAdd.addEventListener('click', openPopupAdd);
+// buttonAdd.addEventListener('click', openPopupAdd);
+buttonAdd.addEventListener('click', () => {popupAddForm.open()});
 
 //Нажатие на "сохранить" сохранит редакцию профиля 
-formEditElement.addEventListener('submit', handleEditFormSubmit); 
+formEditElement.addEventListener('submit', popupEditForm._handleFormSabmit); 
 
-formAddElement.addEventListener('submit', handleAddFormSubmit);
-
+formAddElement.addEventListener('submit', popupAddForm._handleFormSabmit);
