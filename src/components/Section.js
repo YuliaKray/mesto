@@ -13,7 +13,7 @@ export default class Section {
   }
 
   //Метод, котрый принимает изначальную картинку и добовляет их
-  addInitialCards(item) {
+  addInitialCard(item) {
     this._section.append(item);
   }
 

@@ -33,9 +33,9 @@ class Card {
 
     buttonDelete.addEventListener('click', this._handleDelete);
     buttonLike.addEventListener('click', () => {this._handleLike(buttonLike)});
+    
     //Слушатель нажатия на картинку и открытия зуум попапа
-    // this._cardImage.addEventListener('click', () => {openImagePopup(this._cardData)});
-    this._cardImage.addEventListener('click', () => {this._handleCardClick();});
+    this._cardImage.addEventListener('click', () => {this._handleCardClick(this._cardData);});
 
   }
 

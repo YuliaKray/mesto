@@ -25,4 +25,13 @@ const initialCards = [
   }
 ]; 
 
-export { initialCards };
+const config = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__form-text',
+  submitButtonSelector: '.popup__submit-button',
+  inactiveButtonClass: 'popup__submit-button_disabled',
+  inputErrorClass: 'popup__form-text_invalid',
+  errorClass: 'popup__error-message_visible'
+}
+
+export { initialCards, config };

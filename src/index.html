@@ -29,7 +29,7 @@
   </footer>
   <section class="popup popup_type_edit" aria-label="Редактировать">
     <div class="popup__container">
-      <button type="button" class="popup__close" aria-label="Х"></button>
+      <button type="button" class="popup__close" aria-label="Кнопка закрытия"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form class="popup__form" name="edit-form" novalidate>
         <input class="popup__form-text popup__form-text_type_name" type="text" placeholder="Имя" name="name" required minlength="2" maxlength="40">
@@ -42,7 +42,7 @@
   </section>
   <section class="popup popup_type_add" aria-label="Добавить место">
     <div class="popup__container">
-      <button type="button" class="popup__close" aria-label="Х"></button>
+      <button type="button" class="popup__close" aria-label="Кнопка закрытия"></button>
       <h2 class="popup__heading">Новое место</h2>
       <form class="popup__form" name="add-form" novalidate>
         <input class="popup__form-text popup__form-text_type_place" type="text" placeholder="Название" name="place" required minlength="2" maxlength="30">
@@ -55,15 +55,15 @@
   </section>
   <section class="popup popup_type_image" aria-label="Картинка">
     <figure class="popup__figure">
-      <button type="button" class="popup__close" aria-label="Х"></button>
-      <img class="popup__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
+      <button type="button" class="popup__close" aria-label="Кнопка закрытия"></button>
+      <img class="popup__image" alt="Карачаевск" src="<%=require('./images/karachayevsk.jpg')%>">
       <figcaption class="popup__caption">Карачаевск</figcaption>
     </figure> 
   </section>
   <template class="card-template">
     <article class="card">
       <button class="card__delete" type="button" aria-label="Удалить" title="Удалить"></button>
-      <img class="card__image" alt="Карачаевск" src="./images/karachayevsk.jpg">
+      <img class="card__image" alt="Карачаевск" src="<%=require('./images/karachayevsk.jpg')%>">
       <h2 class="card__text">Карачаевск</h2>
       <button class="card__like" type="button" aria-label="Лайк" title="Лайк"></button>
     </article>

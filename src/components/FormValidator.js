@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(config, formElement) {
     this._inputSelector = config.inputSelector;
     this._submitButtonSelector = config.submitButtonSelector;
@@ -6,6 +6,9 @@ class FormValidator {
     this._inputErrorClass = config.inputErrorClass;
     this._errorClass = config.errorClass;
     this._formElement = formElement;
+
+    this._submitButton = this._formElement.querySelector(this._submitButtonSelector);
+    this._inputs = this._formElement.querySelectorAll(this._inputSelector);
   }
 
   //Метод валидного состояния инпута
@@ -47,19 +50,17 @@ class FormValidator {
 
   //Метод изменения состояний кнопки сохранить
   toggleButtonValidity = () => {
-    const submitButton = this._formElement.querySelector(this._submitButtonSelector);
 
     if (this._formElement.checkValidity()) {
-      this._enableButton(submitButton);
+      this._enableButton(this._submitButton);
     } else {
-      this._disableButton(submitButton);
+      this._disableButton(this._submitButton);
     }
   }
 
   //Метод перебора валидации в инпутах и расстановки слушателей
   _setEventListeners = () => {
-    const inputs = this._formElement.querySelectorAll(this._inputSelector);
-    const inputsArray = Array.from(inputs);
+    const inputsArray = Array.from(this._inputs);
   
     inputsArray.forEach((input) => {
       input.addEventListener('input', () => {
@@ -71,15 +72,13 @@ class FormValidator {
 
   //Метод для очистки ошибок при повторном открытии попапа
   resetForm = () => {
-    const inputs = this._formElement.querySelectorAll(this._inputSelector);
-    const inputsArray = Array.from(inputs);
-
-    inputsArray.forEach((input) => {
+    this._inputs.forEach((input) => {
       const errorElement = this._formElement.querySelector(`#error-${input.name}`);
 
       this._setInputValidState(input, errorElement);
-      this.toggleButtonValidity();
-      })
+    });
+
+    this.toggleButtonValidity();
   }
 
   //Метод вызова валидации
@@ -88,13 +87,4 @@ class FormValidator {
   }
 }
 
-const config = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__form-text',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveButtonClass: 'popup__submit-button_disabled',
-  inputErrorClass: 'popup__form-text_invalid',
-  errorClass: 'popup__error-message_visible'
-}
-
-export { FormValidator, config }
+// export { FormValidator }

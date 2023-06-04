@@ -1,7 +1,7 @@
 import './index.css';
-import { initialCards } from "../components/initialCards.js";
+import { initialCards, config } from "../utils/constants.js";
 import Card from "../components/Card.js";
-import { FormValidator, config} from "../components/FormValidator.js";
+import FormValidator from "../components/FormValidator.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
@@ -20,6 +20,8 @@ const popupAdd = document.querySelector('.popup_type_add');
 const formAddElement = popupAdd.querySelector('.popup__form')
 const cardTemplate = document.querySelector('.card-template');
 
+
+
 //Вызов валидации форм
 const validatorEdit = new FormValidator (config, formEditElement);
 const validatorAdd = new FormValidator (config, formAddElement);
@@ -31,7 +33,7 @@ validatorAdd.enableValidation();
 //Класс Section отвечает только за вставление карточек в грид-контейнер
 const section = new Section( { 
   renderer: (item) => {
-    section.addInitialCards(createCard(item, cardTemplate))
+    section.addInitialCard(createCard(item, cardTemplate))
   }
 }, '.cards')
 
@@ -43,40 +45,36 @@ const userInfo = new UserInfo ('.profile__name', '.profile__caption');
 // Создание попапа большой картинки
 const popupImage = new PopupWithImage ('.popup_type_image');
 
+popupImage.setEventListeners();
 
 //Создание попапа редактирования профиля
-const popupEditForm = new PopupWithForm ('.popup_type_edit', (event) => {
-  event.preventDefault();
-
-  userInfo.setUserInfo(popupEditForm._getInputValues());
-  popupEditForm.close();
+const popupEditForm = new PopupWithForm ('.popup_type_edit', (inputValues) => {
+  userInfo.setUserInfo(inputValues);
+  }, () => {
+  validatorEdit.resetForm();
 });
 
+popupEditForm.setEventListeners();
 
 //Создание попапа добавления картинки
-const popupAddForm = new PopupWithForm ('.popup_type_add', (event) => {
-  event.preventDefault();
-
-  const input = popupAddForm._getInputValues();
-  const name = input.place;
-  const link = input.link;
+const popupAddForm = new PopupWithForm ('.popup_type_add', (inputValues) => {
+  const name = inputValues.place;
+  const link = inputValues.link;
   const cardData = {
     name,
     link,
   };
   
   section.addItem(createCard(cardData, cardTemplate)); //созданная карточка встраивается в разметку
-
-  formAddElement.reset();
-  validatorAdd.toggleButtonValidity();
-  
-  popupAddForm.close();
+  }, () => {
+  validatorAdd.resetForm();
 })
 
+popupAddForm.setEventListeners()
 
 //Функция создания карточки из класса
 const createCard = (cardData, cardTemplate) => {
-  const cardCreation = new Card (cardData, cardTemplate, () => {
+  const cardCreation = new Card (cardData, cardTemplate, (cardData) => {
     popupImage.open(cardData);
   }); 
   return cardCreation.createCardElement();
@@ -95,10 +93,4 @@ buttonEdit.addEventListener('click', () => {
   popupEditDescription.value = info.jod
 });
 
-// buttonAdd.addEventListener('click', openPopupAdd);
 buttonAdd.addEventListener('click', () => {popupAddForm.open()});
-
-//Нажатие на "сохранить" сохранит редакцию профиля 
-formEditElement.addEventListener('submit', popupEditForm._handleFormSabmit); 
-
-formAddElement.addEventListener('submit', popupAddForm._handleFormSabmit);

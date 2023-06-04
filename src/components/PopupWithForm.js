@@ -1,36 +1,35 @@
 import Popup from "./Popup.js";
-import { FormValidator, config} from "./FormValidator.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, handleFormSabmit) {
+  constructor(popupSelector, handleFormSabmit, handleClose) {
     super(popupSelector);
     this._handleFormSabmit = handleFormSabmit; //функция сохранения данных
+    this._handleClose = handleClose;
 
-    this._validatorForm = new FormValidator (config, this._popupSelector.querySelector('.popup__form'))
+    this._inputArray = this._popup.querySelectorAll('.popup__form-text');
+    this._form = this._popup.querySelector('.popup__form');
 
-    this._handleFormSabmit = this._handleFormSabmit.bind(this)
+    this._handleFormSabmit = this._handleFormSabmit.bind(this);
   }
 
   //Метод собирает значения (value) всех инпутов формы
   _getInputValues() {
-    const inputArray = this._popupSelector.querySelectorAll('.popup__form-text');
     const inputObj = {};
     
-    inputArray.forEach(input => {
+    this._inputArray.forEach(input => {
       inputObj[input.name] = input.value;
     });
     return inputObj;
   }
 
   open() {  //перезаписываю, чтобы кнопка при первом открытии была неактивна
-    this._validatorForm.resetForm();
+    this._handleClose()
     super.open();
   }
 
   close() {
-    this._validatorForm.resetForm();
-    this._validatorForm.toggleButtonValidity();
-  
+    this._handleClose();
+
     super.close();
   }
 
@@ -38,6 +37,12 @@ export class PopupWithForm extends Popup {
     super.setEventListeners();
 
     //Добавление слушателя сохранения формы
-    this._popupSelector.addEventListener('sabmit', this._handleFormSabmit);
+    this._form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      this._handleFormSabmit(this._getInputValues());      
+      this._form.reset();
+      this.close();
+    });
   }
 }
