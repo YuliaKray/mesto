@@ -37,32 +37,30 @@ export default class FormValidator {
   }
   
   //Метод дизактивации кнопки сохранить
-  _disableButton = (button) => {
-    button.setAttribute('disabled', '');
-    button.classList.add(this._inactiveButtonClass);
+  _disableButton = () => {
+    this._submitButton.setAttribute('disabled', '');
+    this._submitButton.classList.add(this._inactiveButtonClass);
   }
 
   //Метод активации кнопки сохранить
-  _enableButton = (button) => {
-    button.removeAttribute('disabled');
-    button.classList.remove(this._inactiveButtonClass);
+  _enableButton = () => {
+    this._submitButton.removeAttribute('disabled');
+    this._submitButton.classList.remove(this._inactiveButtonClass);
   }
 
   //Метод изменения состояний кнопки сохранить
   toggleButtonValidity = () => {
 
     if (this._formElement.checkValidity()) {
-      this._enableButton(this._submitButton);
+      this._enableButton();
     } else {
-      this._disableButton(this._submitButton);
+      this._disableButton();
     }
   }
 
   //Метод перебора валидации в инпутах и расстановки слушателей
-  _setEventListeners = () => {
-    const inputsArray = Array.from(this._inputs);
-  
-    inputsArray.forEach((input) => {
+  _setEventListeners = () => {  
+    this._inputs.forEach((input) => {
       input.addEventListener('input', () => {
         this._checkInputValidity(input);
         this.toggleButtonValidity();
