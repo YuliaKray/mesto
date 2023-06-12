@@ -40,6 +40,17 @@
       </form>
     </div>
   </section>
+  <section class="popup popup_type_avatar-edit" aria-label="Редактировать аватар">
+    <div class="popup__container">
+      <button type="button" class="popup__close" aria-label="Кнопка закрытия"></button>
+      <h2 class="popup__heading">Обновить аватар</h2>
+      <form class="popup__form" name="avatar-edit-form" novalidate>
+        <input class="popup__form-text popup__form-text_type_avatar-link" type="url" placeholder="Ссылка на картинку аватара" name="avatar" required>
+        <span id="error-avatar" class="popup__error-message"></span>
+        <button type="submit" class="popup__submit-button">Сохранить</button>
+      </form>
+    </div>
+  </section>
   <section class="popup popup_type_add" aria-label="Добавить место">
     <div class="popup__container">
       <button type="button" class="popup__close" aria-label="Кнопка закрытия"></button>
@@ -50,6 +61,15 @@
         <input class="popup__form-text popup__form-text_type_image-link" type="url" placeholder="Ссылка на картинку" name="link" required>
         <span id="error-link" class="popup__error-message"></span>
         <button type="submit" class="popup__submit-button">Сохранить</button>
+      </form>
+    </div>
+  </section>
+  <section class="popup popup_type_delete" aria-label="Удалить объект">
+    <div class="popup__container popup__container_delete">
+      <button type="button" class="popup__close" aria-label="Кнопка закрытия"></button>
+      <h2 class="popup__heading popup__heading_delete">Вы уверены?</h2>
+      <form class="popup__form" name="add-form" novalidate>
+        <button type="submit" class="popup__submit-button">Да</button>
       </form>
     </div>
   </section>
@@ -65,7 +85,10 @@
       <button class="card__delete" type="button" aria-label="Удалить" title="Удалить"></button>
       <img class="card__image" alt="Карачаевск" src="<%=require('./images/karachayevsk.jpg')%>">
       <h2 class="card__text">Карачаевск</h2>
-      <button class="card__like" type="button" aria-label="Лайк" title="Лайк"></button>
+      <div class="card__like-container">
+        <button class="card__like" type="button" aria-label="Лайк" title="Лайк"></button>
+        <span class="card__like-number">4</span>
+      </div>
     </article>
   </template>
 </body>
