@@ -99,7 +99,7 @@ popupEditForm.setEventListeners();
 const popupAvatarForm = new PopupWithForm('.popup_type_avatar-edit', (inputValues) => {
   // const avatar = inputValues.avatar;
   // avatarImage.src =avatar;
-api.setNewAvatar(inputValues).then((info) => {
+  api.setNewAvatar(inputValues).then((info) => {
     // const avatar = info.avatar;
     avatarImage.src = info.avatar;
   }).catch((err) => {console.log(err)});
@@ -111,14 +111,17 @@ popupAvatarForm.setEventListeners();
 
 //Создание попапа добавления картинки
 const popupAddForm = new PopupWithForm ('.popup_type_add', (inputValues) => {
-  const name = inputValues.place;
-  const link = inputValues.link;
-  const cardData = {
-    name,
-    link,
-  };
-  
-  section.addItem(createCard(cardData, cardTemplate)); //созданная карточка встраивается в разметку
+  api.generateCardElement(inputValues).then((inputValues) => {
+    // const name = inputValues.name;
+    // const link = inputValues.link;
+    // const cardData = {
+    //   name,
+    //   link,
+    // };
+    // section.addItem(createCard(cardData, cardTemplate)); //созданная карточка встраивается в разметку
+
+    section.addItem(createCard(inputValues, cardTemplate)); //созданная карточка встраивается в разметку
+  }).catch((err) => {console.log(err)});
   }, () => {
   validatorAdd.resetForm();
 })
@@ -130,18 +133,47 @@ popupAddForm.setEventListeners();
 
 //Функция создания карточки из класса
 const createCard = (cardData, cardTemplate) => {
+
+  // api.generateCardElement(cardData).then((cardData) => {
+  //   const cardCreation = new Card (cardData, cardTemplate, (cardData) => {
+  //     popupImage.open(cardData);
+  //   }, () => {
+  //     //Создание попапа удаления карточки
+  //     const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete', () => {
+  //       cardCreation.handleDelete();
+  //     });
+  //     popupDeleteCard.setEventListeners();
+  //     popupDeleteCard.open()}); 
+  //   return cardCreation.createCardElement()
+  // }).catch((err) => {console.log(err)});
+
   const cardCreation = new Card (cardData, cardTemplate, (cardData) => {
     popupImage.open(cardData);
+  }, (cardData) => {
+    const likeNumber = cardTemplate.querySelector('.card__like-number');
+    likeNumber.textContent = cardData.likes.length;
   }, () => {
     //Создание попапа удаления карточки
     const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete', () => {
-      cardCreation._handleDelete();
+      cardCreation.handleDelete();
     });
     popupDeleteCard.setEventListeners();
     popupDeleteCard.open()}); 
-  return cardCreation.createCardElement();
+  return cardCreation.createCardElement()
 }
 
+// const createCard = (cardData, cardTemplate) => {
+//   const cardCreation = new Card (cardData, cardTemplate, (cardData) => {
+//     popupImage.open(cardData);
+//   }, () => {
+//     //Создание попапа удаления карточки
+//     const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete', () => {
+//       cardCreation.handleDelete();
+//     });
+//     popupDeleteCard.setEventListeners();
+//     popupDeleteCard.open()}); 
+//   return cardCreation.createCardElement();
+// }
 
 
 

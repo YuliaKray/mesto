@@ -71,10 +71,10 @@ export default class Api {
       method: 'POST',
       headers: {
         authorization: this._authorization,
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
       },
       body: JSON.stringify({
-        name: card.name,
+        name: card.place,
         link: card.link
       })
     })
