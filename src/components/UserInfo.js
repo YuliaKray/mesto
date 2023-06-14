@@ -1,14 +1,14 @@
 export default class UserInfo {
-  constructor(nameSelector, jodSelector) {
+  constructor(nameSelector, aboutSelector) {
     this._name = document.querySelector(nameSelector);
-    this._job = document.querySelector(jodSelector);
+    this._about = document.querySelector(aboutSelector);
   }
 
   //метод собирает значения div-элементов в объект
   getUserInfo() {
     const info = {
       name: this._name.textContent,
-      jod: this._job.textContent
+      about: this._about.textContent
     }
     return info;
   }
@@ -16,6 +16,6 @@ export default class UserInfo {
   //Метод вставляет в div-элементы значения из переданого объекта
   setUserInfo(info) {
     this._name.textContent = info.name;
-    this._job.textContent = info.job;
+    this._about.textContent = info.about;
   }
 }

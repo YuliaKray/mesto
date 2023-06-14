@@ -1,8 +1,11 @@
+import { PopupWithForm } from "./PopupWithForm.js";
+
 class Card {
-  constructor (cardData, cardTemplate, handleCardClick) {
+  constructor (cardData, cardTemplate, handleCardClick, openPopupDelete) {
     this._cardData = cardData;
     this._cardTemplate = cardTemplate;
     this._handleCardClick = handleCardClick;
+    this._openPopupDelete = openPopupDelete; //метод для открытия попапа перед удалением карточки
   }
 
   //Метод для передачи нужных названий и ссылки для создания карточки
@@ -31,7 +34,8 @@ class Card {
     const buttonDelete = this._cardElement.querySelector('.card__delete');
     const buttonLike = this._cardElement.querySelector('.card__like');
 
-    buttonDelete.addEventListener('click', this._handleDelete);
+    // buttonDelete.addEventListener('click', this._handleDelete);
+    buttonDelete.addEventListener('click', () => {this._openPopupDelete()});
     buttonLike.addEventListener('click', () => {this._handleLike(buttonLike)});
     
     //Слушатель нажатия на картинку и открытия зуум попапа
