@@ -160,23 +160,49 @@ const createCard = (userID, cardData, cardTemplate) => {
     popupDeleteCard.open()
   }, 
   () => {
-    console.log(Object.values(cardData.likes))
-    Object.values(cardData.likes).forEach((item) =>{
-      if (Object.values(item).includes(userID)) {
+    console.log(Object.values(cardData.likes));
+    console.log(cardData)
+    console.log(cardData.likes)
+    const likesValue = Object.values(cardData.likes);
+      console.log(Object.values(likesValue))
+
+    if (cardData.likes.length >= 1) {
+
+      const arr = Object.values(cardData.likes).filter((item) =>{
+        console.log(item);
+        return item._id == userID
+      });
+      
+      if (arr) {
         //delete like
         console.log("здесь есть мой лайк");
 
         api.deleteLike(cardData).then((res) => {
           cardCreation.setLikeNumber(res);
         }).catch((err) => {console.log(err)});
+
       } else {
-         // set like
+       // set like
         api.setLike(cardData).then((res) => {
-          console.log(res)
           cardCreation.setLikeNumber(res);
         }).catch((err) => {console.log(err)});
+
       }
-     });
+
+     
+console.log(arr)
+
+    
+    } else {
+      console.log('здесь было 0 лайков, могу лайк поставить');
+       // set like
+        api.setLike(cardData).then((res) => {
+          // console.log(res)
+          cardCreation.setLikeNumber(res);
+        }).catch((err) => {console.log(err)});
+        // return cardData;
+    }
+    
     }); 
   return cardCreation.createCardElement()
 }

@@ -29,8 +29,8 @@ class Card {
   }
 
   //Метод лайка карточки
-  _handleLike (button) {
-    button.classList.toggle('card__like_active');
+  _handleLike () {
+    this._buttonLike.classList.toggle('card__like_active');
   }
 
   setLikeNumber(card) {
@@ -43,7 +43,7 @@ class Card {
     const likesArray = Object.values(this._cardData.likes)
       likesArray.forEach((item) =>{
         if (Object.values(item).includes(this._userId)) {
-          this._handleLike(this._buttonLike);
+          this._handleLike();
         }
        })
   }
@@ -62,8 +62,10 @@ class Card {
 
     this._buttonLike.addEventListener('click', () => {
       this._handleLikeClick();
-      this._handleLike(this._buttonLike);
-      this.setLikeNumber(this._cardData);
+      this._handleLike();
+      // this._handleLike(this._buttonLike);
+
+      // this.setLikeNumber(this._cardData);
     });
     
     //Слушатель нажатия на картинку и открытия зуум попапа
