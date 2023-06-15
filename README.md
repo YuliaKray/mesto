@@ -19,6 +19,8 @@
 
 Добавлена сборка проекта с помощью Webpack.
 
+Сайт подключен к серверу.
+
 ### Адрес сайта
 
 [Mesto Russia](https://yuliakray.github.io/mesto/)

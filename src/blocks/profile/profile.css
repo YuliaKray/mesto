@@ -1,4 +1,5 @@
 .profile{
+  position: relative;
   padding-bottom: 51px;
   display: flex;
   flex-direction: row;

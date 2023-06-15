@@ -25,7 +25,6 @@ export default class Api {
       }
     })
     .then(this._handleResponse)
-    // .catch((err) => {console.log(err)})
   }
 
   //Редактирование профиля с запросом patch
@@ -56,12 +55,6 @@ export default class Api {
         avatar: info.avatar,
       })
     })
-    // .then((res) => {  Я передаю json, а не ссылку, поэтому этот then  выдает ошибку
-    //   if (res.url) {
-    //   return res.json()
-    // } else {
-    //   return Promise.reject(`Ошибка: ${res.status}`)
-    // }})
     .then(this._handleResponse)
   }
 
@@ -77,6 +70,42 @@ export default class Api {
         name: card.place,
         link: card.link
       })
+    })
+    .then(this._handleResponse)
+  }
+
+  //Удаление карточки
+  deleteCardElement(cardData) {
+    return fetch(`${this._url}/cards/${cardData._id}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(this._handleResponse)
+  }
+
+  //Постановка лайка
+  setLike(cardData) {
+    return fetch(`${this._url}/cards/${cardData._id}/likes`, {
+      method: 'PUT',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(this._handleResponse)
+  }
+
+  //Удаление лайка
+  deleteLike(cardData) {
+    return fetch(`${this._url}/cards/${cardData._id}/likes`, {
+      method: 'DELETE',
+      headers: {
+        authorization: this._authorization,
+        'Content-Type': 'application/json',
+      },
     })
     .then(this._handleResponse)
   }
