@@ -15,19 +15,19 @@ const popupEdit = document.querySelector('.popup_type_edit');
 const popupEditName = popupEdit.querySelector('.popup__form-text_type_name');
 const popupEditDescription = popupEdit.querySelector('.popup__form-text_type_description');
 const formEditElement = popupEdit.querySelector('.popup__form');
-const buttonSubmitEdit =popupEdit.querySelector('.popup__submit-button');
+// const buttonSubmitEdit =popupEdit.querySelector('.popup__submit-button');
 
 //Переменные для добавления картинок
 const buttonAdd = document.querySelector('.profile__add-button');
 const popupAdd = document.querySelector('.popup_type_add');
 const formAddElement = popupAdd.querySelector('.popup__form')
 const cardTemplate = document.querySelector('.card-template');
-const buttonSubmitAdd =popupAdd.querySelector('.popup__submit-button');
+// const buttonSubmitAdd =popupAdd.querySelector('.popup__submit-button');
 
 
 const avatarImage = document.querySelector('.profile__image');
 const popupAvatar = document.querySelector('.popup_type_avatar-edit');
-const buttonSubmitAvatar =popupAvatar.querySelector('.popup__submit-button');
+// const buttonSubmitAvatar =popupAvatar.querySelector('.popup__submit-button');
 
 
 let userID = null;
@@ -51,6 +51,21 @@ const api = new Api({
   }
 })
 
+// Promise.all([
+//   api.getUserInfo(),
+//   api.getInitialCards()
+// ])
+//Promise.all получаем данные вместе
+api.getApiInfo().then(([info, initialCards]) => {
+  userID = info._id;//Получение информации о пользователе с сервера и вставления в разметку
+  userInfo.setUserInfo(info);
+  section.renderItems(initialCards); //Метод добавляет в разметку изначальный массив карточек
+})
+.catch((err) => {
+  console.log(err);
+})
+
+
 //Класс Section отвечает только за вставление карточек в грид-контейнер
 const section = new Section( { 
   renderer: (item) => {
@@ -62,19 +77,19 @@ const section = new Section( {
 //Создание попапа данных пользователя для вставления в section profile
 const userInfo = new UserInfo ('.profile__name', '.profile__caption', '.profile__image');
 
-//Метод добавляет в разметку изначальный массив карточек
-api.getInitialCards().then((cards) => {
-  section.renderItems(cards);
-}).catch((err) => {console.log(err)});
+// //Метод добавляет в разметку изначальный массив карточек
+// api.getInitialCards().then((cards) => {
+//   section.renderItems(cards);
+// }).catch((err) => {console.log(err)});
 
-//Получение информации о пользователе с сервера и вставления в разметку
-api.getUserInfo().then((info) => {
-  userID = info._id;
-  userInfo.setUserInfo(info);
-  // document.querySelector('.profile__name').textContent = info.name;
-  // document.querySelector('.profile__caption').textContent = info.about;
-  // avatarImage.src = info.avatar;
-}).catch((err) => {console.log(err)});
+// //Получение информации о пользователе с сервера и вставления в разметку
+// api.getUserInfo().then((info) => {
+//   userID = info._id;
+//   userInfo.setUserInfo(info);
+//   // document.querySelector('.profile__name').textContent = info.name;
+//   // document.querySelector('.profile__caption').textContent = info.about;
+//   // avatarImage.src = info.avatar;
+// }).catch((err) => {console.log(err)});
 
 
 // Создание попапа большой картинки
@@ -106,7 +121,6 @@ const popupAvatarForm = new PopupWithForm('.popup_type_avatar-edit', (inputValue
   popupAvatarForm.renderLoading(true);
 
   api.setNewAvatar(inputValues).then((info) => {
-    // avatarImage.src = info.avatar;
     userInfo.setUserInfo(info);
     popupAvatarForm.close();
   }).catch((err) => {
@@ -137,10 +151,10 @@ const popupAddForm = new PopupWithForm ('.popup_type_add', (inputValues) => {
 popupAddForm.setEventListeners();
 
 //Создание попапа удаления карточки
-const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete', () => {
-  api.deleteCardElement(cardData).then(() => {
-    popupDeleteCard.close();
+const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete', (cardId, cardCreation) => {
+  api.deleteCardElement(cardId).then(() => {
     cardCreation.handleDelete();
+    popupDeleteCard.close();
   }).catch((err) => {console.log(err)});    
 });
 
@@ -153,26 +167,30 @@ const createCard = (userID, cardData, cardTemplate) => {
   const cardCreation = new Card (userID, cardData, cardTemplate, (cardData) => {
     popupImage.open(cardData);
   }, 
-  () => {
-    //Создание попапа удаления карточки
-    // const popupDeleteCard = new PopupWithConfirmation('.popup_type_delete', () => {
-    //   api.deleteCardElement(cardData).then(() => {
-    //     popupDeleteCard.close();
-    //     cardCreation.handleDelete();
-    //   }).catch((err) => {console.log(err)});
-      
-    // });
-    // popupDeleteCard.setEventListeners();
-    popupDeleteCard.open()
+  (cardId, cardCreation) => {
+    popupDeleteCard.open(cardId, cardCreation)
   }, 
-  () => {
-
-    // set like
+  (cardData) => {
+    // const arr = Object.values(cardData.likes).filter(item => item._id == userID);
+    // console.log(arr._id)
+    if (cardData.likes.some((like) => like._id === userID)) {
+      //delete like
+      api.deleteLike(cardData).then((res) => {
+        console.log('тут есть мой лайк');
+        console.log(res)
+        cardCreation.updateLikes(res.likes);
+      }).catch((err) => {console.log(err)});
+      
+    } else {
+       // set like
     api.setLike(cardData).then((res) => {
-      console.log(res)
-      cardCreation.updateLikes(res);
+      console.log("Поставила лайк");
+      cardCreation.updateLikes(res.likes);
       
     }).catch((err) => {console.log(err)});
+    }
+    console.log(cardData.likes)
+   return  cardCreation.updateLikes(cardData.likes);
 
 //     console.log(Object.values(cardData.likes));
 //     console.log(cardData)

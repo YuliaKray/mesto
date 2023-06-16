@@ -5,6 +5,10 @@ export default class Api {
     this._authorization = config.headers.authorization; //token
   }
 
+  getApiInfo() {
+    return Promise.all([this.getUserInfo(), this.getInitialCards()]);
+  }
+
   //Метод загрузки информации о пользователе с сервера
   getUserInfo() {
     return fetch(`${this._url}/users/me`, {
@@ -75,8 +79,8 @@ export default class Api {
   }
 
   //Удаление карточки
-  deleteCardElement(cardData) {
-    return fetch(`${this._url}/cards/${cardData._id}`, {
+  deleteCardElement(cardId) {
+    return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: {
         authorization: this._authorization,

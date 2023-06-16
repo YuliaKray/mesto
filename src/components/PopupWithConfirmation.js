@@ -12,6 +12,13 @@ export class PopupWithConfirmation extends Popup {
   this._handleFormSabmit = this._handleFormSabmit.bind(this);
 }
 
+open(cardID, cardElement) {
+  // this._handleFormSabmit(cardID, cardElement)
+  this._cardID = cardID;
+  this._cardElement = cardElement;
+  super.open();
+}
+
 setEventListeners() {
   super.setEventListeners();
 
@@ -19,7 +26,7 @@ setEventListeners() {
   this._form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    this._handleFormSabmit()//this._getInputValues());      
+    this._handleFormSabmit(this._cardID, this._cardElement)//this._getInputValues());      
     // this.close();
   });
 }

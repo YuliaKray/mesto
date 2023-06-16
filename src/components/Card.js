@@ -10,12 +10,10 @@ class Card {
     this._cardElement = this._cardTemplate.content.querySelector('.card').cloneNode(true);
     this._buttonLike = this._cardElement.querySelector('.card__like');
     this._likes = this._cardData.likes; //массив лайков
-    this._cardLikeCount = this._cardElement.querySelector('.card__like-number');
-
-
-
+    this._likeNumber = this._cardElement.querySelector('.card__like-number');
 
     this.handleDelete = this.handleDelete.bind(this);
+    this._isLiked = this._isLiked.bind(this);
 
   }
 
@@ -43,11 +41,12 @@ class Card {
 
   // }
 
-  //Метод для определения есть ли мой лайк на карточке
-  isLiked() {
-    console.log(this._likes)
-    return this._likes.some((like) => {
-      return like._id === this._userId})
+  //Метод для определения, есть ли мой лайк на карточке
+  _isLiked() {
+    console.log(this._likes);
+    return this._likes.some((like) => like._id === this._userId);
+
+    //  this._likes.find(() => {this._userId})
 
     // const likesArray = Object.values(this._cardData.likes)
     //   likesArray.forEach((item) =>{
@@ -60,11 +59,11 @@ class Card {
   //в этом методе собирается функционал с _handleLike и setLikeNumber
   _updateLikesView() {
     // console.log(this._likes)
-    this._cardLikeCount.textContent = this._likes.length;
-    this._buttonLike.classList.toggle('card__like_active', this.isLiked());
+    this._likeNumber.textContent = this._likes.length;
+    this._buttonLike.classList.toggle('card__like_active', this._isLiked());
   } 
 
-  updateLikes(likes) {
+  updateLikes (likes) {
     this._likes = likes;
     this._updateLikesView();
   }
@@ -76,13 +75,13 @@ class Card {
     if (this._userId == this._cardData.owner._id) {
       console.log('мой пост')
       buttonDelete.addEventListener('click', () => {
-        this._openPopupDelete()});
+        this._openPopupDelete(this._cardData._id, this)});
     } else {
       buttonDelete.remove();
     }
 
     this._buttonLike.addEventListener('click', () => {
-      this._handleLikeClick();
+      this._handleLikeClick(this._cardData);
       // this._handleLike();
       // this._handleLike(this._buttonLike);
 
