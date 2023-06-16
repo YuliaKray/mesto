@@ -8,6 +8,7 @@ export class PopupWithForm extends Popup {
 
     this._inputArray = this._popup.querySelectorAll('.popup__form-text');
     this._form = this._popup.querySelector('.popup__form');
+    this._buttonSubmit = this._form.querySelector('.popup__submit-button');
 
     this._handleFormSabmit = this._handleFormSabmit.bind(this);
   }
@@ -28,10 +29,24 @@ export class PopupWithForm extends Popup {
   }
 
   close() {
-    this._form.reset();
-    this._handleClose();
+    // this._form.reset();
+    // this._handleClose();
     super.close();
   }
+
+  //метод для улучшения ux
+  renderLoading(isLoading) {
+
+    if (isLoading) {
+      this._buttonSubmit.textContent = 'Сохранение...';
+      // console.log(this._buttonSubmit.textContent)
+    } else {
+      this._buttonSubmit.textContent = 'Сохранить';
+      // console.log(this._buttonSubmit.textContent)
+  
+    }
+  }
+  
 
   setEventListeners() {
     super.setEventListeners();
@@ -40,8 +55,10 @@ export class PopupWithForm extends Popup {
     this._form.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      this._handleFormSabmit(this._getInputValues());      
-      this.close();
+      this._handleFormSabmit(this._getInputValues());   
+      this._form.reset();
+   
+      // this.close();
     });
   }
 }

@@ -12,27 +12,6 @@ export class PopupWithConfirmation extends Popup {
   this._handleFormSabmit = this._handleFormSabmit.bind(this);
 }
 
-// //Метод собирает значения (value) всех инпутов формы
-// _getInputValues() {
-//   const inputObj = {};
-  
-//   this._inputArray.forEach(input => {
-//     inputObj[input.name] = input.value;
-//   });
-//   return inputObj;
-// }
-
-// open() {  //перезаписываю, чтобы кнопка при первом открытии была неактивна
-//   this._handleClose()
-//   super.open();
-// }
-
-// close() {
-//   // this._form.reset();
-//   this._handleClose();
-//   super.close();
-// }
-
 setEventListeners() {
   super.setEventListeners();
 
@@ -41,7 +20,7 @@ setEventListeners() {
     event.preventDefault();
 
     this._handleFormSabmit()//this._getInputValues());      
-    this.close();
+    // this.close();
   });
 }
 }

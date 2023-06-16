@@ -9,6 +9,10 @@ class Card {
 
     this._cardElement = this._cardTemplate.content.querySelector('.card').cloneNode(true);
     this._buttonLike = this._cardElement.querySelector('.card__like');
+    this._likes = this._cardData.likes; //массив лайков
+    this._cardLikeCount = this._cardElement.querySelector('.card__like-number');
+
+
 
 
     this.handleDelete = this.handleDelete.bind(this);
@@ -29,23 +33,40 @@ class Card {
   }
 
   //Метод лайка карточки
-  _handleLike () {
-    this._buttonLike.classList.toggle('card__like_active');
+  // _handleLike () {
+  //   this._buttonLike.classList.toggle('card__like_active');
+  // }
+
+  // setLikeNumber(card) {
+  //   const likeNumber = this._cardElement.querySelector('.card__like-number');
+  //   likeNumber.textContent = card.likes.length;
+
+  // }
+
+  //Метод для определения есть ли мой лайк на карточке
+  isLiked() {
+    console.log(this._likes)
+    return this._likes.some((like) => {
+      return like._id === this._userId})
+
+    // const likesArray = Object.values(this._cardData.likes)
+    //   likesArray.forEach((item) =>{
+    //     if (Object.values(item).includes(this._userId)) {
+    //       this._handleLike();
+    //     }
+    //    })
   }
 
-  setLikeNumber(card) {
-    const likeNumber = this._cardElement.querySelector('.card__like-number');
-    likeNumber.textContent = card.likes.length;
+  //в этом методе собирается функционал с _handleLike и setLikeNumber
+  _updateLikesView() {
+    // console.log(this._likes)
+    this._cardLikeCount.textContent = this._likes.length;
+    this._buttonLike.classList.toggle('card__like_active', this.isLiked());
+  } 
 
-  }
-
-  isLike() {
-    const likesArray = Object.values(this._cardData.likes)
-      likesArray.forEach((item) =>{
-        if (Object.values(item).includes(this._userId)) {
-          this._handleLike();
-        }
-       })
+  updateLikes(likes) {
+    this._likes = likes;
+    this._updateLikesView();
   }
 
   //Всех слушатели, которые есть у карточки
@@ -62,7 +83,7 @@ class Card {
 
     this._buttonLike.addEventListener('click', () => {
       this._handleLikeClick();
-      this._handleLike();
+      // this._handleLike();
       // this._handleLike(this._buttonLike);
 
       // this.setLikeNumber(this._cardData);
@@ -77,8 +98,9 @@ class Card {
   createCardElement () {
     this._generateCardElement();
     this._setListeners();
-    this.setLikeNumber(this._cardData);
-    this.isLike();
+    // this.setLikeNumber(this._cardData);
+    // this.isLiked();
+    this.updateLikes(this._likes);
     return this._cardElement;
   }
 
