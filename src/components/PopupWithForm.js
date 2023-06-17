@@ -28,22 +28,19 @@ export class PopupWithForm extends Popup {
     super.open();
   }
 
-  close() {
+  // close() {
     // this._form.reset();
     // this._handleClose();
-    super.close();
-  }
+  //   super.close();
+  // }
 
   //метод для улучшения ux
   renderLoading(isLoading) {
 
     if (isLoading) {
       this._buttonSubmit.textContent = 'Сохранение...';
-      // console.log(this._buttonSubmit.textContent)
     } else {
       this._buttonSubmit.textContent = 'Сохранить';
-      // console.log(this._buttonSubmit.textContent)
-  
     }
   }
   
@@ -57,8 +54,6 @@ export class PopupWithForm extends Popup {
 
       this._handleFormSabmit(this._getInputValues());   
       this._form.reset();
-   
-      // this.close();
     });
   }
 }

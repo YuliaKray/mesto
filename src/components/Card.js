@@ -13,7 +13,7 @@ class Card {
     this._likeNumber = this._cardElement.querySelector('.card__like-number');
 
     this.handleDelete = this.handleDelete.bind(this);
-    this._isLiked = this._isLiked.bind(this);
+    this.isLiked = this.isLiked.bind(this);
 
   }
 
@@ -30,37 +30,15 @@ class Card {
     this._cardElement.remove();
   }
 
-  //Метод лайка карточки
-  // _handleLike () {
-  //   this._buttonLike.classList.toggle('card__like_active');
-  // }
-
-  // setLikeNumber(card) {
-  //   const likeNumber = this._cardElement.querySelector('.card__like-number');
-  //   likeNumber.textContent = card.likes.length;
-
-  // }
-
   //Метод для определения, есть ли мой лайк на карточке
-  _isLiked() {
-    console.log(this._likes);
+  isLiked() {
     return this._likes.some((like) => like._id === this._userId);
-
-    //  this._likes.find(() => {this._userId})
-
-    // const likesArray = Object.values(this._cardData.likes)
-    //   likesArray.forEach((item) =>{
-    //     if (Object.values(item).includes(this._userId)) {
-    //       this._handleLike();
-    //     }
-    //    })
   }
 
   //в этом методе собирается функционал с _handleLike и setLikeNumber
   _updateLikesView() {
-    // console.log(this._likes)
     this._likeNumber.textContent = this._likes.length;
-    this._buttonLike.classList.toggle('card__like_active', this._isLiked());
+    this._buttonLike.classList.toggle('card__like_active', this.isLiked());
   } 
 
   updateLikes (likes) {
@@ -81,11 +59,7 @@ class Card {
     }
 
     this._buttonLike.addEventListener('click', () => {
-      this._handleLikeClick(this._cardData);
-      // this._handleLike();
-      // this._handleLike(this._buttonLike);
-
-      // this.setLikeNumber(this._cardData);
+      this._handleLikeClick(this);
     });
     
     //Слушатель нажатия на картинку и открытия зуум попапа
@@ -98,7 +72,6 @@ class Card {
     this._generateCardElement();
     this._setListeners();
     // this.setLikeNumber(this._cardData);
-    // this.isLiked();
     this.updateLikes(this._likes);
     return this._cardElement;
   }
@@ -107,3 +80,16 @@ class Card {
 
 export default Card;
 
+
+
+
+//Метод лайка карточки
+  // _handleLike () {
+  //   this._buttonLike.classList.toggle('card__like_active');
+  // }
+
+  // setLikeNumber(card) {
+  //   const likeNumber = this._cardElement.querySelector('.card__like-number');
+  //   likeNumber.textContent = card.likes.length;
+
+  // }

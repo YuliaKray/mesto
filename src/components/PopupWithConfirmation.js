@@ -4,16 +4,13 @@ export class PopupWithConfirmation extends Popup {
   constructor(popupSelector, handleFormSabmit) {
   super(popupSelector);
   this._handleFormSabmit = handleFormSabmit; //функция сохранения данных
-  // this._handleClose = handleClose;
 
-  // this._inputArray = this._popup.querySelectorAll('.popup__form-text');
   this._form = this._popup.querySelector('.popup__form');
 
   this._handleFormSabmit = this._handleFormSabmit.bind(this);
 }
 
 open(cardID, cardElement) {
-  // this._handleFormSabmit(cardID, cardElement)
   this._cardID = cardID;
   this._cardElement = cardElement;
   super.open();
@@ -26,8 +23,7 @@ setEventListeners() {
   this._form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    this._handleFormSabmit(this._cardID, this._cardElement)//this._getInputValues());      
-    // this.close();
+    this._handleFormSabmit(this._cardID, this._cardElement);      
   });
 }
 }

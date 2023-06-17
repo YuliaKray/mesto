@@ -5,6 +5,7 @@ export default class Api {
     this._authorization = config.headers.authorization; //token
   }
 
+  // Метод для одновременной загрузки инфы о пользователе и карточек
   getApiInfo() {
     return Promise.all([this.getUserInfo(), this.getInitialCards()]);
   }
