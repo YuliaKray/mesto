@@ -154,7 +154,6 @@ const createCard = (userID, cardData, cardTemplate) => {
       //delete like
       api.deleteLike(cardData).then((res) => {
         console.log('тут есть мой лайк');
-        // console.log(res)
         cardCreation.updateLikes(res.likes);
       }).catch((err) => {console.log(err)});
       
@@ -163,11 +162,9 @@ const createCard = (userID, cardData, cardTemplate) => {
     api.setLike(cardData).then((res) => {
       console.log("Поставила лайк");
       cardCreation.updateLikes(res.likes);
-      
     }).catch((err) => {console.log(err)});
     }
-    
-    }); 
+  }); 
   return cardCreation.createCardElement()
 }
 
@@ -189,18 +186,3 @@ avatarImage.addEventListener('click', () => {popupAvatarForm.open()})
 // https://klike.net/uploads/posts/2023-02/1677566911_3-69.jpg
 // https://mobimg.b-cdn.net/v3/fetch/49/49e7e3246c562e1393f98f74e87084e1.jpeg
 
-
-
-// //Метод добавляет в разметку изначальный массив карточек
-// api.getInitialCards().then((cards) => {
-//   section.renderItems(cards);
-// }).catch((err) => {console.log(err)});
-
-// //Получение информации о пользователе с сервера и вставления в разметку
-// api.getUserInfo().then((info) => {
-//   userID = info._id;
-//   userInfo.setUserInfo(info);
-//   // document.querySelector('.profile__name').textContent = info.name;
-//   // document.querySelector('.profile__caption').textContent = info.about;
-//   // avatarImage.src = info.avatar;
-// }).catch((err) => {console.log(err)});

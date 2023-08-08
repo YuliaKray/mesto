@@ -80,16 +80,3 @@ class Card {
 
 export default Card;
 
-
-
-
-//Метод лайка карточки
-  // _handleLike () {
-  //   this._buttonLike.classList.toggle('card__like_active');
-  // }
-
-  // setLikeNumber(card) {
-  //   const likeNumber = this._cardElement.querySelector('.card__like-number');
-  //   likeNumber.textContent = card.likes.length;
-
-  // }

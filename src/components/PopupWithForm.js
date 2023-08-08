@@ -28,15 +28,8 @@ export class PopupWithForm extends Popup {
     super.open();
   }
 
-  // close() {
-    // this._form.reset();
-    // this._handleClose();
-  //   super.close();
-  // }
-
   //метод для улучшения ux
   renderLoading(isLoading) {
-
     if (isLoading) {
       this._buttonSubmit.textContent = 'Сохранение...';
     } else {
@@ -44,7 +37,6 @@ export class PopupWithForm extends Popup {
     }
   }
   
-
   setEventListeners() {
     super.setEventListeners();
 
